@@ -1,6 +1,4 @@
-# 
-
-<img src="file:///home/juan/Documentos/daw2/Proyecto/doc/img/retroapi_logo.png" title="" alt="" width="257">
+![](doc/img/retroapi_logo.png)
 
 # Proxecto de fin de ciclo DAW
 
