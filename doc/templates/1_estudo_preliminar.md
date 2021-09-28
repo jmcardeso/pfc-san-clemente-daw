@@ -1,80 +1,56 @@
 # Estudo preliminar
 
-Neste estudo concretaremos a idea o máximo posible. Canto máis concretos sexamos, máis fáciles van ser de desenvolver as seguintes partes. É necesario realizar completamente o estudo preliminar para pasar ás seguintes fases.
-
-O estudo preliminar inclúe:
-
 ## 1. Introdución
-- Descrición resumida da aplicación. Trátase dunha presentación na cal se debe explicar en que consiste o noso proxecto e que nos permite facer.
+
+Este proxecto consta de dúas partes: unha API REST para xestionar información sobre consolas e ordenadores antigos e unha web de demostración do consumo desa API.
 
 ## 2. Obxectivo
-- Cal é o propósito principal da aplicación a desenvolver?
-- Que problema resolve? 
 
+O obxectivo principal da API é fornecer datos sobre hardware de consumo antigo a sitios web, aplicacións móbiles ou de escritorio, etc. dunha maneira normalizada, gratuíta, multiidioma e facilmente actualizable. Evitando a dispersión da información ao dotar aos posibles usuarios dun sistema centralizado e estandarizado para a obter.
 
-## 3. Definicións 
-- Definirase o vocabulario propio utilizado no proxecto. O vocabulario inclúe:
-	- Termos que son propios do proxecto.
-	- Termos de ámbito técnico como abreviaturas, siglas, acrónimos, etc.
+## 3. Definicións
+
+- API: Interface de programación de aplicación. Un conxunto de servizos cos que un módulo de software prové outros módulos. 
+- REST: Transferencia de estado representacional. Un estilo ou pautas de arquitectura software que emprega HTTP, creado por Roy Fielding, un dos principais autores do protocolo.
+- *Retrocomputing* (ou retroinformática): Todas as actividades relacionadas coas consolas ou ordenadores antigos (preservación, emulación, documentación, etc.).
+- *Hosting*: Servizo que proporciona espazo ou máquinas (reais ou virtuais) para aloxar sitios web, imaxes, vídeos ou aplicacións accesibles mediante Internet.
 
 ## 4. Audiencia
-- A quen vai destinada a aplicación? Describe con moito detalle o tipo de persoa ou empresa para a cal vai dirixida a túa aplicación. Inclúe sexo, franxas de idades, intereses, situación social, económica, etc.
+
+A API está destinada a todos os creadores de contidos para afeccionados ao *retrocomputing* (deseñadores de webs, frontais para emuladores, etc.) que precisen dunha maneira fácil de obter información sobre hardware retro. O perfil da audiencia potencial é tan diverso en canto a idade, situación económica ou social como as consolas ou computadores sobre os que pretende conseguir datos.
 
 ## 5. Necesidades
-- Describe o problema ou a necesidade.
-- Existen na actualidade aplicacións que tenten dar resposta a esa(s) necesidade(s)? En que medida o conseguen?
-- Por que é necesaria a posta en marcha dun proxecto que aborde dita necesidade?
-- Cal é o obxectivo xeral que persegue o proxecto?
-- Responde a estas preguntas concretas:
-	- Como se pode responder a esta necesidade? 
-	- Que pode facerse para cambiar este estado de cousas? 
-	- Como podemos contribuír desde a nosa situación a que o problema se resolva? 
-	- Que medios, actividades e recursos van poñer en xogo? 
-	- Que actividades van realizar? 
-	- Con qué metodoloxía vai levar a cabo o traballo?  
-	- Que persoas serían precisas para realizar o proxecto con éxito? 
-	- Con canto tempo se conta? 
-	- Canto tempo se necesita?
 
-Recurso: [Guía para a elaboración de proyectos. Gobierno Vasco.](https://www.pluralismoyconvivencia.es/upload/19/71/guia_elaboracion_proyectos_c.pdf) (páxina 26 e seguintes)
+O *retrocomputing* está cada vez máis de moda. Tanto persoas de certa idade que queren volver vivir os bos momentos que pasaron coa súa *nintendo* ou o seu Spectrum, como xente nova que busca novas experiencias con xogos antigos, existe unha ampla comunidade de  entusiastas do hardware e o software retro.
 
-## 6. Modelo de negocio 
-O desenvolvemento da aplicación abre unha oportunidade de negocio? É posible comercializala? Como?
+Para dar resposta aos desexos destes usuarios, existen webs que recompilan noticias ou *reviews*, emuladores que permiten executar en máquinas modernas o software de hai anos e, mesmo, fabricantes de hardware (incluíndo os creadores das consolas, como Nintendo ou Sony) que recrean vellas consolas adaptadas aos modernos televisores.
+
+RetroAPI pretende aportar, coa humildade dun proxecto de fin de ciclo, un sistema libre e gratuíto de ofrecer e actualizar a información sobre hardware antigo para que poda ser empregado en calquera medio coa posibilidade de consumir datos dunha API, centralizando o proceso de recompliación e consumo dos datos para que sexan facilmente mantidos e ampliados por calquera.
+
+## 6. Modelo de negocio
+
+RetroAPI é *Open Source*, polo tanto non está pensando para sacar ningún beneficio ecónomico. Non obstante, si que podería -de ser outra a licenza- ser monetizado mediante o pagamento dunha subscripción para acceder á API, por exemplo. Para cubrir os gastos do aloxamento nun servidor, podería utilizarse algún tipo de mecenado, como Patreon.
+
+Ao respecto da web de demostración, podería obter beneficios por medio da publicidade.
 
 ### 6.1. Viabilidade
 
 #### 6.1.1. Viabilidade técnica
-- Será posible dispoñer dos recursos humanos e medios de produción necesarios (materias primas, maquinaria, instalacións, etc.)?
-- Existe algún impedimento técnico que dificulte o proceso produtivo?  
+
+O desenvolvemento da API pode facerse por unha soa persoa, empregando ferramentas e tecnoloxías *Open Source* nun ordenador persoal ou portátil. Para o despregamento pode utilizarse calquera servizo de *hosting* de compañías como Google ou Amazon. Polo tanto, o proxecto é viable tecnicamente sen que exista ningún impedimento para a súa execución.
 
 #### 6.1.2. Viabilidade económica
-- Os beneficios do proxecto son superiores aos costes?
-- As perdas poden cubrirse vía financiamento (por parte da administración pública, con subvencións, etc)?    
+
+Debido á natureza do proxecto, o único custo que pode ter é o servizo de *hosting*. Aínda así, moitas das compañías que ofrecen este servizo adoitan dar créditos durante un tempo ou teñen algún tipo de plan gratuíto con limitacións, que podería servir como plataforma de saída para darse a coñecer ata que houbera a suficiente cantidade de usuarios da API para poder pensar nun mecenado ou calquera outra forma de conseguir o financiamento necesario para ter un aloxamento mellor.
 
 ### 6.2. Competencia
-- Identificación da competencia, as súas características e a súa posición no mercado.
-- Existencia de productos/servizos substitutivos.
 
-Recurso: [Modelo de plan de negocios. Empresa de servicios informáticos. IGAPE](http://www.igape.es/images/crear-unha-empresa/Recursos/PlansdeNegocio/16ServiciosInformaticos12_5_cas.pdf) (páxina 45 e seguintes)
+Como se dixo anteriormente, existen sitios webs dedicados ao *retrocomputing*, pero o propósito deste proxecto é crear unha API que podan consumir estas webs ou calquera outra plataforma ou aplicación que precise dos datos de maneira gratuíta e normalizada.
 
 ### 6.3. Promoción
-- Técnicas elixidas:
-	+ Redes sociais.
-	+ Plataformas multimedia.
-	+ Páxina web.
-	+ Posicionamento web.
-	+ Patrocinios.
-	+ Participación en eventos.
-	+ Prácticas de responsabilidade social corporativa.
-	+ Outros.
-- Xustifica a elección.
-    
+
+A promoción da API sería mediante redes sociais, eventos ou foros especializados onde poder dala a coñecer.
+
 ### 6.4. Modelo de negocio
-- Modelo elixido: 
-	+ Modelo de pago.
-	+ Freemium: é de balde pero as funcionalidades extras son de pago.
-	+ In house: desenvolvementos a medida para contornos empresariais.
-	+ De subscrición.
-	+ Por publicidade.
-	+ Outros.
-- Xustifica a elección.
+
+Ao tratarse dun proxecto *Open Source*, o único investimento necesario sería para pagar o servizo de *hosting*, que podería conseguirse mediante a subscrición ou o mecenado.
