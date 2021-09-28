@@ -2,8 +2,7 @@
 
 # Proxecto de fin de ciclo DAW
 
-> *Tarefa*: Este documento será a páxina de inicio do teu proxecto. Será o primero que vexan os que se interesen por el. Coida a súa redacción e ortografía. Elimina todas as liñas "*Tarefa*" cando teñas a redacción de todo o proxecto completada.
-> Podes acompañar a redacción deste ficheiros con imaxes ou GIFs, pero non abuses deles. 
+> 
 
 ## Descrición
 
