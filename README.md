@@ -2,8 +2,6 @@
 
 # Proxecto de fin de ciclo DAW
 
-> 
-
 ## Descrición
 
 > *Tarefa*: Realiza unha breve descrición do proxecto (entre 100 e 300 palabras). Resalta o fundamental **coas túas palabras**. Utiliza unha linguaxe correcta, pero natural, que o entenda todo o mundo, incluso e en especial, as persoas que non teñan un coñecemento técnico avanzado. Pode ser un estrato ou resumo dos apartados que se contemplan na memoria.
@@ -16,11 +14,11 @@
 
 > *Tarefa*: Neste apartado, describe brevemente como se usará o software. Se ten unha interfaz de terminal, describe aquí a súa sintaxe. Se ten unha interfaz gráfica de usuario, describe aquí **só o uso** (a modo de sumario) **dos aspectos máis relevantes do seu funcionamento** (máxima brevidade, como se fose un anuncio reclamo ou comercial).
 
-## Sobre el autor
+## Sobre o autor
 
 > *Tarefa*: Realiza unha breve descrición de quen es desde unha perspectiva profesional, os teus puntos fortes, tecnoloxías que máis dominas e o motivo de por que te decantaches por este proxecto. **Non máis de 200 palabras**. Indica unha forma fiable de contactar contigo no presente e no futuro.
 
-## Licencia
+## Licenza
 
 > *Tarefa*: É requisito INDISPENSABLE licenciar explicitamente o proxecto. Crea un ficheiro `LICENSE` na raíz do repositorio.
 
