@@ -4,7 +4,13 @@
 
 ## Descrición
 
-> *Tarefa*: Realiza unha breve descrición do proxecto (entre 100 e 300 palabras). Resalta o fundamental **coas túas palabras**. Utiliza unha linguaxe correcta, pero natural, que o entenda todo o mundo, incluso e en especial, as persoas que non teñan un coñecemento técnico avanzado. Pode ser un estrato ou resumo dos apartados que se contemplan na memoria.
+A informática -especificamente a de consumo-, malia ser unha disciplina relativamente nova, xa ten o suficiente tempo como para ter unha pequena historia tras de si. Moitos adultos que foron rapaces nos anos 80 ou 90 do século pasado, lembran con cariño o seu primeiro ordenador ou consola de videoxogos. De feito, non poucos dos profesionais do sector atoparon as posibilidades do mundo dixital trasteando con estes aparellos. 
+
+Ao mesmo tempo, as novas xeracións descubren que, antes dos xogos fotorrealistas en 4K e son 5.1 de hoxe, había outro tipo de videoxogos con menos resolución, píxeles máis grandes, pero tanto ou máis adictivos que os de agora.
+
+Ao redor desta comunidade de nostálxicos/descubridores do pasado da informática, xorde unha pléiade de webs, foros, emuladores, etc. que conforman o *retrocomputing*.
+
+Este proxecto, RetroAPI, ten como obxectivo recompilar a información sobre hardware retro de maneira centralizada e de libre acceso, empregando unha metodoloxía fácil de usar e amplamente comprobada (API REST), para que poda ser utilizada en distintas plataformas e, ao mesmo tempo, sexa doada de manter, actualizar ou engadirlle novas funcionalidades.
 
 ## Instalación
 
@@ -16,15 +22,28 @@
 
 ## Sobre o autor
 
-> *Tarefa*: Realiza unha breve descrición de quen es desde unha perspectiva profesional, os teus puntos fortes, tecnoloxías que máis dominas e o motivo de por que te decantaches por este proxecto. **Non máis de 200 palabras**. Indica unha forma fiable de contactar contigo no presente e no futuro.
+Apaixonado da informática e especialmente da programación desde a época dos 8 bits, autodidacta nos primeiros tempos, cun certificado de profesionalidade de programación de sistemas informáticos, técnico superior en DAM e (case) en DAW. Pelexando cos sistemas operativos desde o vello CP/M ata os actuais Windows 10, Linux, Android...
+
+**Linguaxes:** C/C++, C#, Visual Basic, Python, Java, PHP, JavaScript (vanilla, jQuery, Node.js), SQL
+
+**Contacto:** a18juancg@iessanclemente.net - jmcardeso@outlook.es
+
+**Por que RetroAPI?**: Porque me permite traballar con tecnoloxías aprendidas no ciclo, avanzando no seu coñecemento ao mesmo tempo que creo unha aplicación que pode ser de utilidade.
 
 ## Licenza
 
-> *Tarefa*: É requisito INDISPENSABLE licenciar explicitamente o proxecto. Crea un ficheiro `LICENSE` na raíz do repositorio.
+RetroAPI  
+Autor: Juan Manuel Cardeso García
+
+Este programa é software libre: podes redistribuilo e/ou modificalo baixo os termos da Licenza Xeral Pública de GNU publicada pola Free Software Foundation, xa sexa a versión 3 da Licenza, ou (á túa elección) calquera versión posterior.
+
+Este programa distribúese coa esperanza de que sexa útil pero SEN NINGUNHA GARANTÍA; incluso sen a garantía implícita de MERCANTIBILIDADE ou CUALIFICADA PARA UN PROPÓSITO EN PARTICULAR. Le a Licenza Xeral Pública de GNU para máis detalles.
+
+Debiches recibir unha copia da Licenza Xeral Pública de GNU xunto con este programa. Se non, vai a [http://www.gnu.org/licenses/.](http://www.gnu.org/licenses/)
 
 ## Guía de contribución
 
-> *Tarefa*: Se o teu proxecto se trata de software libre, é importante que expoñas como se pode contribuir a el. Algúns exemplos disto son realizar novas funcionalidades, corrección e/ou optimización de código, realización de tests automatizados, novas interfaces de integración, desenvolvemento de plugins, etc. Intenta dar unha mensaxe concisa.
+Desexas contribuír? Calquera contribución é benvida. Sigue, por favor, [estas instruccións](CONTRIBUTING.md).
 
 ## Memoria
 
