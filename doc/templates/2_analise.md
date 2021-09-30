@@ -1,39 +1,54 @@
-# Análise: Requerimentos do sistema
+# Análise: Requirimentos do sistema
 
-Este documento describe os requirimentos para o \[nome do proxecto\] especificando qué funcionalidade ofrecerá e de que xeito.
+Este documento describe os requirimentos para RetroAPI especificando que funcionalidade ofrecerá e de que xeito.
 
 ## 1. Descrición xeral
 
-Descrición Xeral do proxecto.
+Este proxecto ten dúas partes: a principal, RetroAPI, é un conxunto de funcións para crear, ler, actualizar e borrar (operacións CRUD) unha base de datos con información sobre hardware retro; secundariamente tamén consta dunha web de demostración para consumir os datos da API.
 
 ## 2. Funcionalidades
 
-Describir que operacións se van poder realizar a través da nosa aplicación informática, indicando que actores interveñen en cada caso.
-Enumeralas, de maneira que na fase de deseño poidamos crear o caso de uso correspondente a cada funcionalidade. Ademais, engade as variables coas que se van a traballar.
+A base de datos estará aloxada nun servidor remoto, polo que todas as operacións que se realicen sobre ela terán que ter isto en conta; especialmente, a forma de acceder e a seguridade son factores cruciais. 
 
-Exemplo:
-- Xestión de clientes na BD
-	+ Crear cliente (nome, apelidos, dni, cidade, provincia)
-	+ Modificar cliente (id, nome, apelidos, dni, cidade, provincia)
-	+ Eliminar cliente (id)
-- Xestión de pedidos.
-	+ Crear pedido (id, nome_produto, data)
-	+ Eliminar pedido (id)
-- ...
- 
+Os datos poderán ser lidos por calquera actor, para modificalos ou borralos será imprescindible autenticarse. Ningún actor poderá ter acceso directo á base de datos; todas as operacións faranse por medio dunha interface que se encargue de comprobar se o actor ten os permisos para realizar a acción, se esta é válida, de coller a información da base de datos e subministrarlla ao actor. A interface tamén será a responsable de comunicar ao actor as mensaxes de erros ou calquera outra que se precise.
+
+Haberá dous tipos de actores que interaccionen co sistema: o usuario anónimo e o usuario autenticado. O usuario anónimo (isto é, que non precisa autenticarse) só poderá ler a información da base de datos mediante o uso da interface; o usuario autenticado poderá, ademais, modificar, engadir ou borrar datos. As operacións realizadas polos usuarios autenticados serán rexistradas nun arquivo de log que será almacenado no servidor.
+
+ Operacións do usuario autenticado:
+
+- Xestión de equipos
+  
+  - Crear equipo (nome, fabricante, ano, arquitectura, procesador, memoria, tipo, mando, fotos, descripción, xogos, emuladores)
+  
+  - Modificar equipo (id, nomefabricante, ano, arquitectura, procesador, memoria, tipo, mando, fotos, descrición, xogos, emuladores)
+  
+  - Eliminar equipo (id)
+
+- Xestión de xogos
+  
+  - Crear xogo (nome, productora, ano, xénero, descrición, fotos)
+  
+  - Modificar xogo (id, nome, productora, ano, xénero, descrición, fotos)
+  
+  - Eliminar xogo (id)
+
+- Xestión de emuladores
+  
+  - Crear emulador (nome, licenza, web, descrición, autor)
+  
+  - Modificar emulador (id, nome, licenza, web, descrición, autor)
+  
+  - Eliminar emulador (id)
+
 ## 3. Requerimentos non funcionais
 
-Requerimentos relativos a rendemento, seguridade, etc. se procede.
+A modificación da base de datos terá que ser realizada por un actor debidamente autenticado.
 
 ## 4. Tipos de usuarios
 
-Tipos de usuario que poderán acceder ó noso sistema, poderán diferenciarse polos permisos sobre os datos, pantallas que se lles mostran, etc.
+- Usuario anónimo, que poderá ler a información gardada na base de datos
+- Usuario autenticado, que poderá modificar ou eliminar esta información
 
-Exemplo:
-
-- Usuario xerente, que terá acceso a ...
-- Usuario técnico, que poderá...
- 
 ## 5. Entorno operacional
 
 ### 5.1. Dominio
@@ -42,20 +57,18 @@ Indica os dominios que se van a empregar.
 
 ### 5.2. Hardware
 
-Indicar elementos hardware que se usarán. Por exemplo: ordenador para desenvolver a aplicación, smartphone para probar a aplicación na súa versión móbil, servidor web, servidor de bases de datos, CDN, etc.
+Un ordenador para desenvolver a aplicación e un servizo de *hosting* baseado na nube para aloxar a base de datos, a interface e a web de demostración.
 
 ### 5.3. Software
 
-Indicar software que haberá que instalar en cada elemento hardware. Por exemplo: aplicacións de desenvolvemento, aplicacións para o servidor, etc.
+Para o desenvolvemento do proxecto empregarase como IDE Visual Studio Code, ademais dos distintos linguaxes e frameworks necesarios (todos eles *Open Source*)
+
+No servizo de *hosting* instalarase un sistema operativo GNU/Linux, cun servidor web e un sistema xestor de base de datos (igualmente *Open Source*).
 
 ## 6. Interfaces externos
 
-Indicar como se comunicará o noso software co exterior. Os diferentes tipos son:
-
-- De usuario. Por exemplo: as diferentes vistas da apliación, comandos de terminal, etc.
-- Hardware. Por exemplo: un lector de código de barras.
-- Software. Por exemplo: unha API.
+Toda a comunicación co exterior será mediante unha API.
 
 ## 7. Melloras futuras
 
-É posible que o noso proxecto se centre en resolver un problema concreto que se poderá ampliar no futuro con novas funcionalidades, novas interfaces, etc.
+A principal mellora de RetroAPI no futuro sería a de incluír máis datos, tanto do hardware como -especialmente- do software, para poder ser cada vez máis completo. O obxectivo final, só acadable de maneira colaborativa, sería recompilar toda a información sobre hardware e software retro nunha base de datos pública e gratuíta.
