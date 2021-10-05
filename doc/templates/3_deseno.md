@@ -4,13 +4,22 @@ Unha vez realizada a fase de análise, debemos ter como resultado un listado de 
 
 Unha vez realices esta fase, remata de completar o último anexo: Orzamento.
 
+RetroAPI pretende fornecer de maneira gratuita a calquera usuario información sobre *retrocomputing*. Para iso, como se detallou na [análise](./2_analise.md), é preciso contar cun sistema xestor de bases de datos que permita realizar as operacións típicas  de creación, lectura, actualización e eliminación (CRUD) e que sexa rápido e flexible, para poder ampliar a información recollida ou engadir traduccións a outros idiomas con facilidade.  
+
+Desde hai uns anos, os sistemas NonSQL son cada vez máis utilizados pola súa flexibilidade ao non precisar de estruturas ríxidas como as táboas dos vellos sistemas relacionais. Dentro dos sistemas NonSQL, o de maior aceptación é, sen dúbida, MongoDB, un sistema de base de datos orientado a documentos que, polas súas características, é a opción máis acaída para este proxecto.
+
+Para conectar a base de datos cos potenciais usuarios, empregarase unha interface (API) que use a metodoloxía REST, pola súa facilidade de uso e idoneidade para usar co protocolo HTTP.
+
 ## Modelo conceptual do dominio da aplicación
+
 Pode ser un diagrama de clases usando UML, ConML, ou outra linguaxe semellante.
 
 ## Casos de uso
+
 Descritos en fichas e/ou mediante esquemas; deben incluír o(s) tipo(s) de usuario implicados en cada caso de uso.
 
 ## Deseño de interface de usuarios
+
 Unha forma de axudar ó deseño da aplicación é realizar uns mockups: pódelos facer á man ou cunha aplicación ou a través dunha web do estilo: https://app.diagrams.net/
 
 Os mockups deben incluir todas as vistas da aplicación, é dicir, todas as páxinas diferentes que un usuario (de calquera tipo) vai a poder ver. Un mockup permite ver como se verá unha páxina concreta da nosa aplicación web. O deseño de mockups vainos axudar a:
@@ -19,6 +28,7 @@ Os mockups deben incluir todas as vistas da aplicación, é dicir, todas as páx
 - Visualizar a información que vai a ser necesaria mostrar. Sabendo con que información imos traballar e sabendo a información que necesitamos mostrar ao usuarios, podemos organizar os datos dunha forma axeitada para gardalos na base de datos. 
 
 ## Diagrama de Base de Datos.
+
 Nesta fase tamén teremos que realizar:
 
 - Modelo Entidade/relación 
