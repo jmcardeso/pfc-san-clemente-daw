@@ -10,7 +10,7 @@ RetroAPI pretende fornecer de maneira gratuita a calquera usuario información s
 
 Desde hai uns anos, os sistemas NonSQL son cada vez máis utilizados pola súa flexibilidade ao non precisar de estruturas ríxidas como as táboas dos vellos sistemas relacionais. Dentro dos sistemas NonSQL, o de maior aceptación é, sen dúbida, MongoDB, un sistema de base de datos orientado a documentos que, polas súas características, é a opción máis acaída para este proxecto.
 
-Para conectar a base de datos cos potenciais usuarios, empregarase unha interface (API) que use a metodoloxía REST, pola súa facilidade de uso e idoneidade para usar co protocolo HTTP.
+Para conectar a base de datos cos potenciais usuarios, empregarase unha interface (API) desenvolvida como servizo web que use a metodoloxía REST, pola súa facilidade de uso e idoneidade para usar co protocolo HTTP.
 
 ## Modelo conceptual do dominio da aplicación
 
