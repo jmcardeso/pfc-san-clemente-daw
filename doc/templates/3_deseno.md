@@ -24,7 +24,9 @@ Pode ser un diagrama de clases usando UML, ConML, ou outra linguaxe semellante.
 
 ## Casos de uso
 
-Descritos en fichas e/ou mediante esquemas; deben incluír o(s) tipo(s) de usuario implicados en cada caso de uso.
+
+
+![](/home/juan/Documentos/daw2/Proyecto/doc/img/casos_uso.png)
 
 ## Deseño de interface de usuarios
 
