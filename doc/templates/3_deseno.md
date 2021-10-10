@@ -12,6 +12,12 @@ Desde hai uns anos, os sistemas NonSQL son cada vez máis utilizados pola súa f
 
 Para conectar a base de datos cos potenciais usuarios, empregarase unha interface (API) desenvolvida como servizo web que use a metodoloxía REST, pola súa facilidade de uso e idoneidade para usar co protocolo HTTP.
 
+A API estará desenvolvida utilizando Node.js, que utiliza JavaScript no lado do servidor e conta con multitude de módulos, propios e feitos pola comunidade, que permiten ao programador centrarse nas funcionalidades da súa aplicación e non en aspectos, como a creación dun servidor web, xa creados e probados por moitos outros usuarios.
+
+Os usuarios da API terán dous tipos de acceso: un totalmente público (sen necesidade de autenticarse) para poder consumir os datos e outro no que se precisará autenticación para modificar, engadir ou borrar datos. O proceso de autenticación farase utilizando **TODO**. Implementarase tamén un arquivo de *log*, onde queden rexistrados os accesos ao servidor; para isto, empregarase **TODO**.
+
+Ademais da API, crearase unha pequena web de demostración do consumo dos datos. O deseño estará feito en Bootstrap que, como no caso das ferramentas xa mencionadas, permite aforrar tempo de desenvolvemento ao proporcionar moitas das funcionalidades necesarias.
+
 ## Modelo conceptual do dominio da aplicación
 
 Pode ser un diagrama de clases usando UML, ConML, ou outra linguaxe semellante.
