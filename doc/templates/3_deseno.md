@@ -24,8 +24,6 @@ Pode ser un diagrama de clases usando UML, ConML, ou outra linguaxe semellante.
 
 ## Casos de uso
 
-
-
 ![](/home/juan/Documentos/daw2/Proyecto/doc/img/casos_uso.png)
 
 ## Deseño de interface de usuarios
