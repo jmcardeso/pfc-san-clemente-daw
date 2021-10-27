@@ -20,7 +20,7 @@ Ademais da API, crearase unha pequena web de demostración do consumo dos datos.
 
 ## Modelo conceptual do dominio da aplicación
 
-Pode ser un diagrama de clases usando UML, ConML, ou outra linguaxe semellante.
+![](../img/clases.png)
 
 ## Casos de uso
 
