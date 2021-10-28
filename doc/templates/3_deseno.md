@@ -1,11 +1,5 @@
 # Deseño
 
-Unha vez realizada a fase de análise, debemos ter como resultado un listado de tarefas ou funcións a implementar. Nesta fase, debemos deseñar os algoritmos para implementar cada unha das funcións (cun diagrama ou pseudocódigo). Isto soamente debería ser necesario para funcións ou tarefas complexas que requiran de pasos máis pequenos para a súa implementación.
-
-Unha vez realices esta fase, remata de completar o último anexo: Orzamento.
-
-------------------------
-
 RetroAPI pretende fornecer de maneira gratuíta a calquera usuario información sobre *retrocomputing*. Para iso, como se detallou na [análise](./2_analise.md), é preciso contar cun sistema xestor de bases de datos que permita realizar as operacións típicas  de creación, lectura, actualización e eliminación (CRUD) e que sexa rápido e flexible, para poder ampliar a información recollida ou engadir traduccións a outros idiomas con facilidade.  
 
 Desde hai uns anos, os sistemas NonSQL son cada vez máis utilizados pola súa flexibilidade ao non precisar de estruturas ríxidas como as táboas dos vellos sistemas relacionais. Dentro dos sistemas NonSQL, o de maior aceptación é, sen dúbida, MongoDB, un sistema de base de datos orientado a documentos que, polas súas características, é a opción máis acaída para este proxecto.
@@ -34,12 +28,3 @@ Os mockups deben incluir todas as vistas da aplicación, é dicir, todas as páx
 
 - Avanzar moi rápido na parte frontend: ao ter os mockups realizados, xa sabemos que elementos vai ter cada vista e onde colocalos. Podes empregar un framework CSS ou programar as follas de estilos.
 - Visualizar a información que vai a ser necesaria mostrar. Sabendo con que información imos traballar e sabendo a información que necesitamos mostrar ao usuarios, podemos organizar os datos dunha forma axeitada para gardalos na base de datos. 
-
-## Diagrama de Base de Datos.
-
-Nesta fase tamén teremos que realizar:
-
-- Modelo Entidade/relación 
-- Modelo relacional 
-
-Poderedes entregar a captura do phpMyAdmin se empregades MariaDB como Modelo relacional.
