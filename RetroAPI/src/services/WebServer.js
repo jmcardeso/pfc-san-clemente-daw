@@ -35,7 +35,7 @@ class Server {
         this.app.listen(
             this.port,
             () => {
-                console.log(`Server inicializado escuchando por el puerto ${this.port}`);
+                this.logger.debug(`RetroAPI - Server running and listening on port ${this.port}`);
             }
         )
     }
