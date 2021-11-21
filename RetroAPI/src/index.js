@@ -4,4 +4,4 @@ require('./configs/dotenv');
 const Server = require('./services/WebServer');
 
 // Inicialización REST Server
-new Server().start();
+new Server().conectarDB().start();

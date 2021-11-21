@@ -1,5 +1,7 @@
 const express = require('express');
 
+const { dbConnectionSync } = require('./../configs/config_db');
+
 class Server {
     constructor(){
         this.app = express()
@@ -35,6 +37,13 @@ class Server {
 
         // Rutas
         this.routes();
+    }
+
+    conectarDB() {
+        dbConnectionSync()
+            .then( msg => this.logger.info(msg))
+            .catch(err => this.logger.error(err.message));
+        return this;
     }
 
     middlewares(){
