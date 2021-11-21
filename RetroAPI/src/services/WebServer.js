@@ -57,6 +57,9 @@ class Server {
             res.status(202).json({msg:'RetroAPI, a free API to access retro hardware and software', status: true});
             this.logger.debug("GET access from /");
         });
+
+        // Mapping Path -> router
+        this.app.use( "/api/v1/emulators",  require('./routes/router_emulators'));
     }
 
     start(){

@@ -7,7 +7,7 @@ const dbConnectionSync = async() => {
         await mongoose.connect( process.env.MONGODB_CNN, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            serverSelectionTimeoutMS: 1500
+            serverSelectionTimeoutMS: 1500,
         });
 
         return "RetroAPI - Database online";
