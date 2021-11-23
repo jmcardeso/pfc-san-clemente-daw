@@ -1,11 +1,14 @@
 const { model, Schema } = require('mongoose');
 
 const EmulatorSchema = Schema({
-    Name: { type: String, required: true },
-    License: { type: String, required: false },
-    Web: { type: String, required: false },
-    Description: { type: String, required: true },
-    Author: { type: String, required: false }
+    name: { type: String, required: true },
+    license: { type: String, required: false },
+    web: { type: String, required: false },
+    description: {
+        lang: { type: String, required: false },
+        content: { type: String, required: true }
+    },
+    author: { type: String, required: false }
 });
 
 EmulatorSchema.methods.toJSON = function(){

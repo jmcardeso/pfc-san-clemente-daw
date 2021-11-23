@@ -2,6 +2,7 @@ const Emulator = require('./../model/Emulator');
 
 const emulatorsGET = async(req, res) => {
     try {
+        const {lang = "en"} = req.query;
         const [emulators] = await Promise.all([
             Emulator.find(),
         ]);
