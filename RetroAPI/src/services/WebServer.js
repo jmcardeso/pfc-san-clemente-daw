@@ -15,6 +15,9 @@ class Server {
 
         // Rutas
         this.routes();
+
+        // Error Handling
+        this.errors();
     }
 
     conectarDB() {
@@ -38,6 +41,15 @@ class Server {
 
         // Mapping Path -> router
         this.app.use( "/api/v1/emulators",  require('./routes/router_emulators'));
+    }
+
+    errors(){
+        this.app.use((req, res, next) => {
+            res.status(400);
+
+            res.json({msg: "RetroAPI - Bad request"});
+            logError("The request is not well constructed");
+        });
     }
 
     start(){

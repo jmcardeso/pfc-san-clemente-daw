@@ -10,9 +10,17 @@ const emulatorsGET = async(req, res) => {
 
         logDebug("GET access from /api/v1/emulators");
 
-        res.json({
-            emulators,
-        });
+        if (emulators.length > 0) {
+            res.status(200).json({
+                emulators,
+            });
+            logDebug("Search succeed");
+        } else {
+            res.status(404).json({
+                "msg": "RetroAPI - Not Found"
+            });
+            logDebug("No results found");
+        }
     } catch (error) {
         res.status(400).json({
             "msg": "RetroAPI - Bad Request"
