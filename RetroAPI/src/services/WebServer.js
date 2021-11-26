@@ -41,14 +41,29 @@ class Server {
 
         // Mapping Path -> router
         this.app.use( "/api/v1/emulators",  require('./routes/router_emulators'));
+
+        this.app.get('*', function (req, res, next) {
+            const error = new Error(
+              `${req.ip} tried to access ${req.originalUrl}`,
+            );
+          
+            error.statusCode = 404;
+          
+            next(error);
+          });
     }
 
     errors(){
-        this.app.use((req, res, next) => {
-            res.status(400);
+        this.app.use((error, req, res, next) => {
+            if (!error.statusCode) error.statusCode = 500;
 
-            res.json({msg: "RetroAPI - Bad request"});
-            logError("The request is not well constructed");
+            if (error.statusCode === 404) {
+              return res.status(404).json({msg:'RetroAPI - The server has not found anything matching the Request-URI'});
+            }
+          
+            return res
+              .status(error.statusCode)
+              .json({ error: error.toString() });
         });
     }
 

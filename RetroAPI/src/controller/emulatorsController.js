@@ -1,8 +1,9 @@
 const Emulator = require('./../model/Emulator');
 const { logDebug, logInfo, logError }  = require('./../helpers/logger');
 const { filter } = require('./../helpers/filter');
+const RetroError = require('./../services/routes/errors/retroError');
 
-const emulatorsGET = async(req, res) => {
+const emulatorsGET = async(req, res, next) => {
     try {
         const [emulators] = await Promise.all([
             Emulator.find(filter(req.query)),
@@ -16,10 +17,8 @@ const emulatorsGET = async(req, res) => {
             });
             logDebug("Search succeed");
         } else {
-            res.status(404).json({
-                "msg": "RetroAPI - Not Found"
-            });
-            logDebug("No results found");
+            logDebug("Search not found");
+            next(new RetroError("RetroAPI - Not Found", 200));
         }
     } catch (error) {
         res.status(400).json({

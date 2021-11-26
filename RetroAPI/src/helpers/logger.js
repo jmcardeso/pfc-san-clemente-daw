@@ -21,6 +21,10 @@ const consoleConf = {
     timestamp: true
 };
 
+/**
+ * Inicia el servicio de logs, enlazándolo con la instancia activa de express.
+ * @param app La instancia de express a la que se enlazará el logger.
+ */
 const startLogger = (app) => {
     express_logger.initializeLogger(app, fileConf, consoleConf);
     logger = express_logger.getLogger();
