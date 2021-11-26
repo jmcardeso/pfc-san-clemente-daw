@@ -6,7 +6,7 @@ const { startLogger, logDebug, logInfo, logError }  = require('./../helpers/logg
 class Server {
     constructor(){
         this.app = express()
-        this.port = process.env.WEB_SERVER_PORT;
+        this.port = process.env.PORT;
 
         startLogger(this.app);
 
