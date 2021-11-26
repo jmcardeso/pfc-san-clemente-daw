@@ -15,7 +15,7 @@ const emulatorsGET = async(req, res, next) => {
             res.status(200).json({
                 emulators,
             });
-            logDebug("Search succeed");
+            logDebug("Search succeed"); 
         } else {
             logDebug("Search not found");
             next(new RetroError("RetroAPI - Not Found", 200));
