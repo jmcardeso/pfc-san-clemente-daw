@@ -1,5 +1,5 @@
 // Inicializar variables de entorno
-require('./configs/dotenv');
+//require('./configs/dotenv');
 
 const Server = require('./services/WebServer');
 
