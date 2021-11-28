@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = required("cors");
 
 const { dbConnectionSync } = require('./../configs/config_db');
 const { startLogger, logDebug, logInfo, logError }  = require('./../helpers/logger');
@@ -29,6 +30,7 @@ class Server {
 
     middlewares(){
         // Lectura y parseo del body de la request empleando json
+        this.app.use('cors');
         this.app.use( express.json() );
     }
 
