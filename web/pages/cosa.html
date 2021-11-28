@@ -31,7 +31,7 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function (json) {
-                    $('#info').html('Name: ' + json.name + " Author: " + json.author)
+                    $('#info').html('Name: ' + json.eumulators[0].name + " Author: " + json.emulators[0].author)
                 },
                 error: function (jqXHR, status, error) {
                     alert('Desculpe, produciuse un problema');
