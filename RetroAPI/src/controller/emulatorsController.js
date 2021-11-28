@@ -1,16 +1,16 @@
 const Emulator = require('./../model/Emulator');
 const { logDebug, logInfo, logError }  = require('./../helpers/logger');
-const { filter } = require('./../helpers/filter');
+const { filterEmulators } = require('./../helpers/filter');
 const RetroError = require('./../services/routes/errors/retroError');
 
 const emulatorsGET = async(req, res, next) => {
     try {
         const [emulators] = await Promise.all([
-            Emulator.find(filter(req.query)),
+            Emulator.find(filterEmulators(req.query)),
         ]);
 
         logDebug("GET access from /api/v1/emulators");
-        
+
         res.status(200).json({
             emulators,
         });
