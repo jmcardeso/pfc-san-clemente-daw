@@ -1,12 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <title>Cosa</title>
 </head>
+
 <body>
-    <p>Cosa</p>
+    <h2 class="m-2">Llamada a RetroAPI</h2>
+    <button type="button" class="m-3" onclick="solicitudeDatos()">Consultar</button>
+    <div id="info" class="alert alert-success m-3"></div>
+    <script>
+        function solicitudeDatos() {
+            $.ajax({
+                // a URL para a petición
+                url: 'https://retroapi-daw.herokuapp.com/api/v1/emulators?license=Licencia 1',
+                type: 'GET',
+                dataType: 'json',
+                success: function (json) {
+                    $('#info').html('Name: ' + json.name + " Author: " + json.author)
+                },
+                error: function (jqXHR, status, error) {
+                    alert('Desculpe, produciuse un problema');
+                },
+                complete: function (jqXHR, status) {
+                    alert('Petición finalizada');
+                }
+            });
+        }
+
+    </script>
 </body>
+
 </html>
