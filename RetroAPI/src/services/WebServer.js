@@ -29,8 +29,9 @@ class Server {
     }
 
     middlewares(){
+        // middleware para habilitar CORS
         this.app.use(cors());
-        // Lectura y parseo del body de la request empleando json
+        // Lectura y parseo del body de la request empleando JSON
         this.app.use( express.json() );
     }
 
@@ -44,6 +45,7 @@ class Server {
         // Mapping Path -> router
         this.app.use( "/api/v1/emulators",  require('./routes/router_emulators'));
 
+        // Todas las URLs que no estén ruteadas por la aplicación devuelven un error 404
         this.app.get('*', function (req, res, next) {
             const error = new Error(
               `${req.ip} tried to access ${req.originalUrl}`,

@@ -1,9 +1,10 @@
 const express_logger = require('express-logger-unique-req-id');
+
 let logger;
 
 //logger configuration
 const fileConf = {
-    level: 'debug',
+    level: process.env.LOG_LEVEL,
     filename: process.env.LOG_NAME,
     handleExceptions: true,
     json: true,
@@ -14,7 +15,7 @@ const fileConf = {
 };
 
 const consoleConf = {
-    level: 'debug',
+    level: process.env.LOG_LEVEL,
     handleExceptions: true,
     json: false,
     colorize: true,
