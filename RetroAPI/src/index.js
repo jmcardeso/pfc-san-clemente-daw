@@ -1,5 +1,5 @@
-// Inicializar variables de entorno (COMENTAR PARA DESPLIEGUE EN HEROKU)
-require('./configs/dotenv');
+// Inicializar variables de entorno (si no estamos en producción)
+if (process.env.NODE_ENV != 'production') require('./configs/dotenv');
 
 const Server = require('./services/WebServer');
 
