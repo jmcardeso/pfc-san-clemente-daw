@@ -6,7 +6,7 @@ const EmulatorSchema = Schema({
     web: { type: String, required: false },
     description: {
         lang: { type: String, required: false },
-        content: { type: String, required: true }
+        content: { type: String, required: false }
     },
     author: { type: String, required: false }
 });
