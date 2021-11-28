@@ -7,7 +7,8 @@ const filterEmulators = (query) => {
     if (like) isLike = like == '1' ? true : false;
     if (name) filterObject.name = isLike ? { $regex: name, $options: 'i' } : name;
     if (license) filterObject.license = isLike ? { $regex: license, $options: 'i' } : license;
-    if (description) filterObject.description = { lang: lang, content: isLike ? { $regex: description, $options: 'i' } : description };
+    // Revisar este filtro. ¿Mejor usar elemMatch()?
+    if (description) filterObject.description = isLike ? { lang: lang, content: { $regex: description, $options: 'i' } } : description;
     if (author) filterObject.author = isLike ? { $regex: author, $options: 'i' } : author;
     if (web) filterObject.web = isLike ? { $regex: web, $options: 'i' } : web;
 
