@@ -1,5 +1,5 @@
 const express = require('express');
-const cors = required("cors");
+const cors = require("cors");
 
 const { dbConnectionSync } = require('./../configs/config_db');
 const { startLogger, logDebug, logInfo, logError }  = require('./../helpers/logger');
