@@ -29,8 +29,8 @@ class Server {
     }
 
     middlewares(){
-        // Lectura y parseo del body de la request empleando json
         this.app.use(cors());
+        // Lectura y parseo del body de la request empleando json
         this.app.use( express.json() );
     }
 
