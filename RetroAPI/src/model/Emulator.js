@@ -12,8 +12,8 @@ const EmulatorSchema = Schema({
 });
 
 EmulatorSchema.methods.toJSON = function(){
-    const {_id, ...Emulator} = this.toObject();
+    const { _id, ...Emulator } = this.toObject();
     return Emulator;
-}
+};
 
 module.exports = model('Emulator', EmulatorSchema);
