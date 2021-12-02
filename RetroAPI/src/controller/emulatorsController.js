@@ -9,10 +9,10 @@ const emulatorsGET = async (req, res, next) => {
         if (lang == undefined) lang = 'en';
 
         const emuFilter = filterEmulators(req.query);
-        if (Object.keys(emuFilter).length == 0) throw (new RetroError("RetroAPI - Not such parameter", 400));
+        //if (Object.keys(emuFilter).length == 0) throw (new RetroError("RetroAPI - Not such parameter", 400));
 
         const [emulatorsRaw] = await Promise.all([
-            Emulator.find(filterEmulators(req.query)),
+            Emulator.find(emuFilter),
         ]);
 
         let emulators = new Array();
@@ -35,7 +35,7 @@ const emulatorsGET = async (req, res, next) => {
                     Object.assign(newElement, { 'description.lang': ""});
                     Object.assign(newElement, { 'description.content': ""});
                 }
-            } else {
+            } else if (typeof (description.lang) == 'object') {
                 for (let i = 0; i < description.lang.length; i++) {
                     if (description.lang[i] == lang) {
                         Object.assign(newElement, { 'description.lang': description.lang[i] });
@@ -64,6 +64,41 @@ const emulatorsGET = async (req, res, next) => {
     }
 }
 
+const emulatorsPOST = async (req, res, next) => {
+    try {
+        const newEmulator = new Emulator(req.body);
+        await newEmulator.save();
+
+        res.status(201).json({
+            "msg": "RetroAPI - The new emulator has been saved successfully" 
+        });
+    } catch(error) {
+        res.status(400).json({
+            "msg": "RetroAPI - Emulator validation failed: name is required."
+        });
+        logError(error.message);
+    }
+}
+
+const emulatorsPUT = async (req, res, next) => {
+    try {
+
+    } catch(error) {
+
+    }
+}
+
+const emulatorsDELETE = async (req, res, next) => {
+    try {
+
+    } catch(error) {
+
+    }
+}
+
 module.exports = {
     emulatorsGET,
+    emulatorsPOST,
+    emulatorsPUT,
+    emulatorsDELETE,
 }
