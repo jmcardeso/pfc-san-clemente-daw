@@ -7,14 +7,18 @@ const emulatorsGET = async (req, res, next) => {
     try {
         let { lang } = req.query;
         if (lang == undefined) lang = 'en';
-        const [emulators] = await Promise.all([
+
+        const emuFilter = filterEmulators(req.query);
+        if (Object.keys(emuFilter).length == 0) throw (new RetroError("RetroAPI - Not such parameter", 400));
+
+        const [emulatorsRaw] = await Promise.all([
             Emulator.find(filterEmulators(req.query)),
         ]);
 
-        let emuLang = new Array();
+        let emulators = new Array();
         let newElement;
 
-        for (let emu of emulators) {
+        for (let emu of emulatorsRaw) {
             let { description, name, license, web, author } = emu;
             newElement = new Object();
 
@@ -23,27 +27,32 @@ const emulatorsGET = async (req, res, next) => {
             newElement.web = web;
             newElement.author = author;
 
-            // Poner lang en inglés si no existe el idioma
             if (typeof (description.lang) == 'string') {
                 if (description.lang == lang) {
                     Object.assign(newElement, { 'description.lang': description.lang });
                     Object.assign(newElement, { 'description.content': description.content });
+                } else {
+                    Object.assign(newElement, { 'description.lang': ""});
+                    Object.assign(newElement, { 'description.content': ""});
                 }
             } else {
                 for (let i = 0; i < description.lang.length; i++) {
                     if (description.lang[i] == lang) {
                         Object.assign(newElement, { 'description.lang': description.lang[i] });
                         Object.assign(newElement, { 'description.content': description.content[i] });
+                    } else {
+                        Object.assign(newElement, { 'description.lang': ""});
+                        Object.assign(newElement, { 'description.content': ""});
                     }
                 }
             }
-            emuLang.push(newElement);
+            emulators.push(newElement);
         }
 
         logDebug("GET access from /api/v1/emulators");
 
         res.status(200).json({
-            emuLang,
+            emulators,
         });
 
         logDebug(emulators.length > 0 ? "Search succeed" : "Search not found");

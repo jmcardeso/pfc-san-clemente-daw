@@ -1,7 +1,7 @@
 const { logDebug, logInfo, logError } = require('./../helpers/logger');
 
 const filterEmulators = (query) => {
-    const { lang = "en", from = 0, limit = 25, name, license, description, author, web, like } = query;
+    const { lang = "en", name, license, description, author, web, like } = query;
 
     let filterObject = new Object;
     let isLike;
