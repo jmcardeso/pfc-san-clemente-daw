@@ -21,7 +21,7 @@ const filterEmulators = (query) => {
     if (web) emuFilter.web = isLike ? { $regex: web, $options: 'i' } : web;
 
     if (all) {
-        if (all == '1' && Object.keys(emuFilter).length == 0) return {};
+        if (all == '1' && Object.keys(emuFilter).length == 0) return {langFilter ,emuFilter : {} };
         else throw new retroError("Syntax error", 400);
     }
 
