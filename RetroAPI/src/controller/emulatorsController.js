@@ -5,15 +5,7 @@ const RetroError = require('./../services/routes/errors/retroError');
 
 const emulatorsGET = async (req, res, next) => {
     try {
-        let { lang } = req.query;
-        if (lang == undefined) lang = 'en';
-
-        let emuFilter = filterEmulators(req.query);
-        if (Object.keys(emuFilter).length == 0) throw (new RetroError("RetroAPI: Not such parameter", 400));
-        if (Object.keys(emuFilter).includes('all')) {
-            if (Object.keys(emuFilter).length == 1 && emuFilter.all == '1') emuFilter = {};
-            else throw (new RetroError("RetroAPI: Bad request", 400));
-        }
+        const { langFilter, emuFilter } = filterEmulators(req.query);
 
         const [emulatorsRaw] = await Promise.all([
             Emulator.find(emuFilter),
@@ -21,13 +13,16 @@ const emulatorsGET = async (req, res, next) => {
 
         logDebug("GET access from /api/v1/emulators");
 
-        const emulators = emulatorsJSON(emulatorsRaw, lang);
+        const emulators = emulatorsJSON(emulatorsRaw, langFilter);
         res.status(200).json({
             emulators,
         });
-        
+
         logDebug(emulators.length > 0 ? "Search succeed" : "Search not found");
     } catch (error) {
+        if (error.statusCode == undefined) error.statusCode = 400;
+        if (error.name == 'CastError') error.message = "RetroAPI: Bad request";
+
         res.status(error.statusCode).json({
             "msg": error.message
         });
@@ -41,9 +36,9 @@ const emulatorsPOST = async (req, res, next) => {
         await newEmulator.save();
 
         res.status(201).json({
-            "msg": "RetroAPI - The new emulator has been saved successfully" 
+            "msg": "RetroAPI - The new emulator has been saved successfully"
         });
-    } catch(error) {
+    } catch (error) {
         res.status(400).json({
             "msg": "RetroAPI - Emulator validation failed: name is required."
         });
@@ -54,7 +49,7 @@ const emulatorsPOST = async (req, res, next) => {
 const emulatorsPUT = async (req, res, next) => {
     try {
 
-    } catch(error) {
+    } catch (error) {
 
     }
 }
@@ -62,7 +57,7 @@ const emulatorsPUT = async (req, res, next) => {
 const emulatorsDELETE = async (req, res, next) => {
     try {
 
-    } catch(error) {
+    } catch (error) {
 
     }
 }
@@ -76,28 +71,29 @@ const emulatorsJSON = (emus, lang) => {
         newElement = new Object();
 
         newElement.name = name;
-        newElement.license = license;
-        newElement.web = web;
-        newElement.author = author;
+        newElement.license = license ? license : '';
+        newElement.web = web ? web : '';
+        newElement.author = author ? author : '';
 
         if (typeof (description.lang) == 'string') {
             if (description.lang == lang) {
                 Object.assign(newElement, { 'description.lang': description.lang });
                 Object.assign(newElement, { 'description.content': description.content });
             } else {
-                Object.assign(newElement, { 'description.lang': ""});
-                Object.assign(newElement, { 'description.content': ""});
+                Object.assign(newElement, { 'description.lang': '' });
+                Object.assign(newElement, { 'description.content': '' });
             }
         } else if (typeof (description.lang) == 'object') {
             for (let i = 0; i < description.lang.length; i++) {
                 if (description.lang[i] == lang) {
                     Object.assign(newElement, { 'description.lang': description.lang[i] });
                     Object.assign(newElement, { 'description.content': description.content[i] });
-                } else {
-                    Object.assign(newElement, { 'description.lang': ""});
-                    Object.assign(newElement, { 'description.content': ""});
+                    break;
                 }
             }
+        } else {
+            Object.assign(newElement, { 'description.lang': '' });
+            Object.assign(newElement, { 'description.content': '' });
         }
         emulators.push(newElement);
     }
