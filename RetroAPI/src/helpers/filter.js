@@ -1,7 +1,7 @@
 const { logDebug, logInfo, logError } = require('./../helpers/logger');
 
 const filterEmulators = (query) => {
-    const { lang = "en", name, license, description, author, web, like } = query;
+    const { name, license, description, author, web, like, all } = query;
 
     let filterObject = new Object;
     let isLike;
@@ -15,6 +15,7 @@ const filterEmulators = (query) => {
     }
     if (author) filterObject.author = isLike ? { $regex: author, $options: 'i' } : author;
     if (web) filterObject.web = isLike ? { $regex: web, $options: 'i' } : web;
+    if (all) filterObject.all = all;
 
     logDebug(JSON.stringify(filterObject));
 

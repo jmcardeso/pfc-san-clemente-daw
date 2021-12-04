@@ -10,10 +10,10 @@ const dbConnectionSync = async() => {
             serverSelectionTimeoutMS: 1500,
         });
 
-        return "RetroAPI - Database online";
+        return "RetroAPI: Database online";
 
     } catch (error) {
-        throw new Error('RetroAPI - Error connecting to database')
+        throw new Error('RetroAPI: Error connecting to database')
     }
 }
 

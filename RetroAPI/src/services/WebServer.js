@@ -38,7 +38,7 @@ class Server {
     routes(){
         // Routes explícitas
         this.app.get('/', (req, res) => {
-            res.status(202).json({msg:'RetroAPI, a free API to access retro hardware and software', status: true});
+            res.status(202).json({msg:'RetroAPI, a free API to access retro hardware and software'});
             logDebug("GET access from /");
         });
 
@@ -62,7 +62,7 @@ class Server {
             if (!error.statusCode) error.statusCode = 500;
 
             if (error.statusCode === 404) {
-              return res.status(404).json({msg:'RetroAPI - The server has not found anything matching the Request-URI'});
+              return res.status(404).json({msg:'RetroAPI: The server has not found anything matching the Request-URI'});
             }
           
             return res
@@ -75,7 +75,7 @@ class Server {
         this.app.listen(
             this.port,
             () => {
-                logInfo(`RetroAPI - Server running and listening on port ${this.port}`);
+                logInfo(`RetroAPI: Server running and listening on port ${this.port}`);
             }
         )
     }
