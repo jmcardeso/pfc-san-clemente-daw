@@ -1,7 +1,7 @@
 const { model, Schema } = require('mongoose');
 
 const EmulatorSchema = Schema({
-    name: { type: String, required: true },
+    name: { type: String, required: true, unique: true },
     license: { type: String, required: false },
     web: { type: String, required: false },
     description: {
@@ -11,7 +11,7 @@ const EmulatorSchema = Schema({
     author: { type: String, required: false }
 });
 
-EmulatorSchema.methods.toJSON = function(){
+EmulatorSchema.methods.toJSON = function () {
     const { _id, ...Emulator } = this.toObject();
     return Emulator;
 };

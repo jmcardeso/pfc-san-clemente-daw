@@ -2,6 +2,7 @@ const Emulator = require('./../model/Emulator');
 const { logDebug, logInfo, logError } = require('./../helpers/logger');
 const { filterEmulators } = require('./../helpers/filter');
 const RetroError = require('./../services/routes/errors/retroError');
+const { json } = require('express');
 
 const emulatorsGET = async (req, res, next) => {
     try {
@@ -54,17 +55,42 @@ const emulatorsPOST = async (req, res, next) => {
 
 const emulatorsPUT = async (req, res, next) => {
     try {
-
+        const { name, ...rest } = req.body;
+        // SOLUCIONAR PROBLEMA CON LA DESCRIPCIÓN (QUE SOLO ACTUALICE O CREE EL IDIOMA INDICADO O INGLÉS SI NO SE INDICA NINGUNO)
+        const result = await Emulator.findOneAndUpdate({ name }, rest, { new: true });
+        if (result) {
+            res.status(200).json({
+                "msg": "Emulator successfully updated"
+            });
+        } else throw new RetroError("Emulator not found", 404);
     } catch (error) {
+        if (error.statusCode == undefined) error.statusCode = 400;
+        if (error.name == 'CastError') error.message = "Bad request";
 
+        res.status(error.statusCode).json({
+            "msg": error.message
+        });
+        logError(error.statusCode + ' - ' + error.message);
     }
 }
 
 const emulatorsDELETE = async (req, res, next) => {
     try {
-
+        const { name } = req.body;
+        const result = await Emulator.findOneAndDelete({ name });
+        if (result) {
+            res.status(200).json({
+                "msg": "Emulator successfully deleted"
+            });
+        } else throw new RetroError("Emulator not found", 404);
     } catch (error) {
+        if (error.statusCode == undefined) error.statusCode = 400;
+        if (error.name == 'CastError') error.message = "Bad request";
 
+        res.status(error.statusCode).json({
+            "msg": error.message
+        });
+        logError(error.statusCode + ' - ' + error.message);
     }
 }
 
