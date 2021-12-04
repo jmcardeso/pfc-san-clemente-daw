@@ -21,7 +21,7 @@ const emulatorsGET = async (req, res, next) => {
         logDebug(emulators.length > 0 ? "Search succeed" : "Search not found");
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
-        if (error.name == 'CastError') error.message = "RetroAPI: Bad request";
+        if (error.name == 'CastError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
@@ -33,16 +33,22 @@ const emulatorsGET = async (req, res, next) => {
 const emulatorsPOST = async (req, res, next) => {
     try {
         const newEmulator = new Emulator(req.body);
-        await newEmulator.save();
+
+        let emulatorExists = await Emulator.find({ 'name': newEmulator.name });
+        if (emulatorExists.length == 1) throw new RetroError('The emulator already exists', 400);
+        else await newEmulator.save();
 
         res.status(201).json({
-            "msg": "RetroAPI - The new emulator has been saved successfully"
+            "msg": "The new emulator has been saved successfully"
         });
     } catch (error) {
-        res.status(400).json({
-            "msg": "RetroAPI - Emulator validation failed: name is required."
+        if (error.statusCode == undefined) error.statusCode = 400;
+        if (error.name == 'CastError') error.message = "Bad request";
+
+        res.status(error.statusCode).json({
+            "msg": error.message
         });
-        logError(error.message);
+        logError(error.statusCode + ' - ' + error.message);
     }
 }
 

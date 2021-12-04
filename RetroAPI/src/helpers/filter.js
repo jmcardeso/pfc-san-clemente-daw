@@ -22,10 +22,10 @@ const filterEmulators = (query) => {
 
     if (all) {
         if (all == '1' && Object.keys(emuFilter).length == 0) return {};
-        else throw new retroError("RetroAPI: Syntax error", 400);
+        else throw new retroError("Syntax error", 400);
     }
 
-    if (Object.keys(emuFilter).length == 0 || Object.keys(rest).length > 0) throw new retroError("RetroAPI: Syntax error", 400);
+    if (Object.keys(emuFilter).length == 0 || Object.keys(rest).length > 0) throw new retroError("Syntax error", 400);
 
     logDebug(JSON.stringify(emuFilter));
 
