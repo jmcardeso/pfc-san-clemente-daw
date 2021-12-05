@@ -2,14 +2,13 @@ const Emulator = require('./../model/Emulator');
 const { logDebug, logInfo, logError } = require('./../helpers/logger');
 const { filterEmulators } = require('./../helpers/filter');
 const RetroError = require('./../services/routes/errors/retroError');
-const { json } = require('express');
 
 const emulatorsGET = async (req, res, next) => {
     try {
         const { langFilter, emuFilter } = filterEmulators(req.query);
 
         const [emulatorsRaw] = await Promise.all([
-            Emulator.find(emuFilter),
+            Emulator.find(emuFilter, { 'description._id': 0 }),
         ]);
 
         logDebug("GET access from /api/v1/emulators");
@@ -35,9 +34,14 @@ const emulatorsPOST = async (req, res, next) => {
     try {
         const newEmulator = new Emulator(req.body);
 
+        if (req.body.description) {
+            if (!Array.isArray(req.body.description)) throw new RetroError('The description must be an array', 400);
+        }
+
         let emulatorExists = await Emulator.find({ 'name': newEmulator.name });
         if (emulatorExists.length == 1) throw new RetroError('The emulator already exists', 400);
-        else await newEmulator.save();
+
+        await newEmulator.save();
 
         res.status(201).json({
             "msg": "The new emulator has been saved successfully"
@@ -63,6 +67,8 @@ const emulatorsPUT = async (req, res, next) => {
 
         let descriptionBeforeUpdate = JSON.parse(JSON.stringify(emulatorBeforeUpdate.description));
 
+        if (!Array.isArray(description)) throw new RetroError('The description must be an array', 400);
+
         if (description[0].content) {
             if (!description[0].lang) description[0].lang = 'en';
 
@@ -75,7 +81,9 @@ const emulatorsPUT = async (req, res, next) => {
                         break;
                     }
                 }
+
                 updatedEmulator.description = descriptionBeforeUpdate;
+
                 if (!existsDescription) {
                     updatedEmulator.description.push(description[0]);
                 }
@@ -132,26 +140,15 @@ const emulatorsJSON = (emus, lang) => {
         newElement.license = license ? license : '';
         newElement.web = web ? web : '';
         newElement.author = author ? author : '';
+        newElement.description = new Array();
 
-        if (typeof (description.lang) == 'string') {
-            if (description.lang == lang) {
-                Object.assign(newElement, { 'description.lang': description.lang });
-                Object.assign(newElement, { 'description.content': description.content });
-            } else {
-                Object.assign(newElement, { 'description.lang': '' });
-                Object.assign(newElement, { 'description.content': '' });
-            }
-        } else if (typeof (description.lang) == 'object') {
-            for (let i = 0; i < description.lang.length; i++) {
-                if (description.lang[i] == lang) {
-                    Object.assign(newElement, { 'description.lang': description.lang[i] });
-                    Object.assign(newElement, { 'description.content': description.content[i] });
+        if (description.length > 0) {
+            for (let desc of description) {
+                if (desc.lang == lang) {
+                    newElement.description.push(desc);
                     break;
                 }
             }
-        } else {
-            Object.assign(newElement, { 'description.lang': '' });
-            Object.assign(newElement, { 'description.content': '' });
         }
         emulators.push(newElement);
     }
