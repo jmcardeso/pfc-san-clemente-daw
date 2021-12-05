@@ -2,3 +2,4 @@ RetroAPI/node_modules
 *.log
 RetroAPI/.env
 RetroAPI/emulators_mongodb.json
+RetroAPI/games_mongodb.json

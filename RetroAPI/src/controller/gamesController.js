@@ -1,31 +1,31 @@
-// Controlador para los emuladores
+// Controlador para los juegos
 
-const Emulator = require('./../model/Emulator');
+const Game = require('./../model/Game');
 const { logDebug, logInfo, logError } = require('./../helpers/logger');
-const { filterEmulators } = require('./../helpers/filter');
+const { filterGames } = require('./../helpers/filter');
 const RetroError = require('./../services/routes/errors/retroError');
 const { Query } = require('mongoose');
 
-// GET - Leer documentos de la colección 'emulators' de la BD
-const emulatorsGET = async (req, res, next) => {
+// GET - Leer documentos de la colección 'games' de la BD
+const gamesGET = async (req, res, next) => {
     try {
         // Almacenamos el idioma de la descripción y construimos el filtro para la búsqueda
-        const { langFilter, emuFilter } = filterEmulators(req.query);
+        const { langFilter, gameFilter } = filterGames(req.query);
 
         // Buscamos en la BD, eliminando el _id del array de descripciones
-        const [emulatorsRaw] = await Promise.all([
-            Emulator.find(emuFilter, { 'description._id': 0 }),
+        const [gamesRaw] = await Promise.all([
+            Game.find(gameFilter, { 'description._id': 0 }),
         ]);
 
-        logDebug("GET access from /api/v1/emulators");
+        logDebug("GET access from /api/v1/games");
 
         // Construimos el JSON que se mostrará en la salida
-        const emulators = emulatorsJSON(emulatorsRaw, langFilter);
+        const games = gamesJSON(gamesRaw, langFilter);
         res.status(200).json({
-            emulators,
+            games,
         });
 
-        logDebug(emulators.length > 0 ? "Search succeed" : "Search not found");
+        logDebug(games.length > 0 ? "Search succeed" : "Search not found");
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
         if (error.name == 'CastError') error.message = "Bad request";
@@ -37,24 +37,24 @@ const emulatorsGET = async (req, res, next) => {
     }
 }
 
-// POST - Añadir un documento en la colección 'emulators' de la BD
-const emulatorsPOST = async (req, res, next) => {
+// POST - Añadir un documento en la colección 'games' de la BD
+const gamesPOST = async (req, res, next) => {
     try {
-        const newEmulator = new Emulator(req.body);
+        const newGame = new Game(req.body);
 
         // Si el usuario ha añadido una descripción, comprobamos que sea un array
         if (req.body.description) {
             if (!Array.isArray(req.body.description)) throw new RetroError('The description must be an array', 400);
         }
 
-        // Si el nombre del emulador existe, lanzamos una excepción
-        let emulatorExists = await Emulator.find({ 'name': newEmulator.name });
-        if (emulatorExists.length == 1) throw new RetroError('The emulator already exists', 400);
+        // Si el nombre del juego existe, lanzamos una excepción
+        let gameExists = await Game.find({ 'name': newGame.name });
+        if (gameExists.length == 1) throw new RetroError('The game already exists', 400);
 
-        await newEmulator.save();
+        await newGame.save();
 
         res.status(201).json({
-            "msg": "The new emulator has been saved successfully"
+            "msg": "The new game has been saved successfully"
         });
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
@@ -67,20 +67,20 @@ const emulatorsPOST = async (req, res, next) => {
     }
 }
 
-// PUT - Modificar un documento de la colección 'emulators' de la BD
-const emulatorsPUT = async (req, res, next) => {
+// PUT - Modificar un documento de la colección 'games' de la BD
+const gamesPUT = async (req, res, next) => {
     try {
         // Desestructuramos para almacenar la descripción
-        let { description, ...updatedEmulator } = req.body;
+        let { description, ...updatedGame } = req.body;
 
         // Buscamos el documento en la BD
-        let [emulatorBeforeUpdate] = await Emulator.find({ 'name': updatedEmulator.name });
+        let [gameBeforeUpdate] = await Game.find({ 'name': updatedGame.name });
 
         // Si no existe, error
-        if (!emulatorBeforeUpdate) throw new RetroError('Emulator not found', 400);
+        if (!gameBeforeUpdate) throw new RetroError('Game not found', 400);
 
         // Convertimos la descripción del formato de MongoDB a un array normal
-        let descriptionBeforeUpdate = JSON.parse(JSON.stringify(emulatorBeforeUpdate.description));
+        let descriptionBeforeUpdate = JSON.parse(JSON.stringify(gameBeforeUpdate.description));
 
         // Comprobamos que el usuario añadió la descripción en forma de array
         if (description) {
@@ -105,25 +105,25 @@ const emulatorsPUT = async (req, res, next) => {
                     }
 
                     // Añadimos el array de descripciones anterior a la modificación en el documento modificado (para que no se eliminen) 
-                    updatedEmulator.description = descriptionBeforeUpdate;
+                    updatedGame.description = descriptionBeforeUpdate;
 
                     // Si no estaba el idioma que queremos añadir en el documento, lo añadimos ahora
                     if (!existsDescription) {
-                        updatedEmulator.description.push(description[0]);
+                        updatedGame.description.push(description[0]);
                     }
 
                     // Si no hay elementos en el array de descripciones del documento, añadimos la que pone el usuario sin más
-                } else Object.assign(updatedEmulator, { 'description': [description[0]] });
+                } else Object.assign(updatedGame, { 'description': [description[0]] });
             }
         }
         // Realizamos la modificación en la BD
-        const result = await Emulator.updateOne({ 'name': updatedEmulator.name }, updatedEmulator, { new: true });
+        const result = await Game.updateOne({ 'name': updatedGame.name }, updatedGame, { new: true });
 
         if (result) {
             res.status(200).json({
-                "msg": "Emulator successfully updated"
+                "msg": "Game successfully updated"
             });
-        } else throw new RetroError("Emulator not found", 404);
+        } else throw new RetroError("Game not found", 404);
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
         if (error.name == 'CastError') error.message = "Bad request";
@@ -135,16 +135,16 @@ const emulatorsPUT = async (req, res, next) => {
     }
 }
 
-// Borrar un documento de la colección 'emulators' de la BD
-const emulatorsDELETE = async (req, res, next) => {
+// Borrar un documento de la colección 'games' de la BD
+const gamesDELETE = async (req, res, next) => {
     try {
         const { name } = req.body;
-        const result = await Emulator.findOneAndDelete({ name });
+        const result = await Game.findOneAndDelete({ name });
         if (result) {
             res.status(200).json({
-                "msg": "Emulator successfully deleted"
+                "msg": "Game successfully deleted"
             });
-        } else throw new RetroError("Emulator not found", 404);
+        } else throw new RetroError("Game not found", 404);
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
         if (error.name == 'CastError') error.message = "Bad request";
@@ -157,23 +157,24 @@ const emulatorsDELETE = async (req, res, next) => {
 }
 
 /**
- * Da formato a la búsqueda de la colección 'emulators'
- * @param {Query} emus - El array con los elementos encontrados
+ * Da formato a la búsqueda de la colección 'games'
+ * @param {Query} gms - El array con los elementos encontrados
  * @param {String} lang - El idioma que se mostrará para la descripción
  * @returns {Array} El array formateado para el idioma especificado (inglés si no se ha indicado ninguno)
  */
-const emulatorsJSON = (emus, lang) => {
-    let emulators = new Array();
+const gamesJSON = (gms, lang) => {
+    let games = new Array();
     let newElement;
 
-    for (let emu of emus) {
-        let { description, name, license, web, author } = emu;
+    for (let gm of gms) {
+        let { description, name, studio, year, genre, image } = gm;
         newElement = new Object();
 
         newElement.name = name;
-        newElement.license = license ? license : '';
-        newElement.web = web ? web : '';
-        newElement.author = author ? author : '';
+        newElement.studio = studio ? studio : '';
+        newElement.year = year ? year : '';
+        newElement.genre = genre ? genre : '';
+        newElement.image = image ? image : '';
         newElement.description = new Array();
 
         if (description.length > 0) {
@@ -184,15 +185,15 @@ const emulatorsJSON = (emus, lang) => {
                 }
             }
         }
-        emulators.push(newElement);
+        games.push(newElement);
     }
 
-    return emulators;
+    return games;
 }
 
 module.exports = {
-    emulatorsGET,
-    emulatorsPOST,
-    emulatorsPUT,
-    emulatorsDELETE,
+    gamesGET,
+    gamesPOST,
+    gamesPUT,
+    gamesDELETE,
 }

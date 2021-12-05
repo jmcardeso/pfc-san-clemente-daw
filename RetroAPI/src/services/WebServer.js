@@ -44,6 +44,7 @@ class Server {
 
         // Mapping Path -> router
         this.app.use( "/api/v1/emulators",  require('./routes/router_emulators'));
+        this.app.use( "/api/v1/games",  require('./routes/router_games'));
 
         // Todas las URLs que no estén ruteadas por la aplicación devuelven un error 404
         this.app.get('*', function (req, res, next) {
