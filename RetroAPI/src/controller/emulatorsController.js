@@ -55,9 +55,35 @@ const emulatorsPOST = async (req, res, next) => {
 
 const emulatorsPUT = async (req, res, next) => {
     try {
-        const { name, ...rest } = req.body;
-        // SOLUCIONAR PROBLEMA CON LA DESCRIPCIÓN (QUE SOLO ACTUALICE O CREE EL IDIOMA INDICADO O INGLÉS SI NO SE INDICA NINGUNO)
-        const result = await Emulator.findOneAndUpdate({ name }, rest, { new: true });
+        let { description, ...updatedEmulator } = req.body;
+
+        let [emulatorBeforeUpdate] = await Emulator.find({ 'name': updatedEmulator.name });
+
+        if (!emulatorBeforeUpdate) throw new RetroError('Emulator not found', 400);
+
+        let descriptionBeforeUpdate = JSON.parse(JSON.stringify(emulatorBeforeUpdate.description));
+
+        if (description[0].content) {
+            if (!description[0].lang) description[0].lang = 'en';
+
+            if (Object.keys(descriptionBeforeUpdate).length > 0) {
+                let existsDescription = false;
+                for (element of descriptionBeforeUpdate) {
+                    if (element.lang == description[0].lang) {
+                        element.content = description[0].content;
+                        existsDescription = true;
+                        break;
+                    }
+                }
+                updatedEmulator.description = descriptionBeforeUpdate;
+                if (!existsDescription) {
+                    updatedEmulator.description.push(description[0]);
+                }
+            } else Object.assign(updatedEmulator, { 'description': [description[0]] });
+        }
+
+        const result = await Emulator.updateOne({ 'name': updatedEmulator.name }, updatedEmulator, { new: true });
+
         if (result) {
             res.status(200).json({
                 "msg": "Emulator successfully updated"
