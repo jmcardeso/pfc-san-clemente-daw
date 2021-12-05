@@ -1,3 +1,5 @@
+// Conexión con la base de datos
+
 const mongoose = require('mongoose');
 
 const dbConnectionSync = async() => {
