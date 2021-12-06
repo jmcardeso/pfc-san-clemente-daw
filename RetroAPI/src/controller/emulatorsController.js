@@ -28,12 +28,13 @@ const emulatorsGET = async (req, res, next) => {
         logDebug(emulators.length > 0 ? "Search succeed" : "Search not found");
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
+        logError(error.statusCode + ' - ' + error.message);
+
         if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
         });
-        logError(error.statusCode + ' - ' + error.message);
     }
 }
 
@@ -62,12 +63,13 @@ const emulatorsPOST = async (req, res, next) => {
         });
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
+        logError(error.statusCode + ' - ' + error.message);
+
         if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
         });
-        logError(error.statusCode + ' - ' + error.message);
     }
 }
 
@@ -140,12 +142,13 @@ const emulatorsPUT = async (req, res, next) => {
         } else throw new RetroError("Emulator not found", 404);
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
+        logError(error.statusCode + ' - ' + error.message);
+
         if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
         });
-        logError(error.statusCode + ' - ' + error.message);
     }
 }
 
@@ -165,12 +168,13 @@ const emulatorsDELETE = async (req, res, next) => {
         } else throw new RetroError("Emulator not found", 404);
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
+        logError(error.statusCode + ' - ' + error.message);
+
         if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
         });
-        logError(error.statusCode + ' - ' + error.message);
     }
 }
 

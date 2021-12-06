@@ -34,12 +34,13 @@ const devicesGET = async (req, res, next) => {
         logDebug(devices.length > 0 ? "Search succeed" : "Search not found");
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
+        logError(error.statusCode + ' - ' + error.message);
+
         if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
         });
-        logError(error.statusCode + ' - ' + error.message);
     }
 }
 
@@ -87,12 +88,13 @@ const devicesPOST = async (req, res, next) => {
         });
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
+        logError(error.statusCode + ' - ' + error.message);
+
         if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
         });
-        logError(error.statusCode + ' - ' + error.message);
     }
 }
 
@@ -151,6 +153,24 @@ const devicesPUT = async (req, res, next) => {
             }
         }
 
+        if (games) {
+            for (let element of games) {
+                const [game] = await Promise.all([
+                    Game.findOne({ name: element }),
+                ]);
+                if (game) newDevice.games.push(game._id);
+            }
+        }
+
+        if (emulators) {
+            for (let element of emulators) {
+                const [emulator] = await Promise.all([
+                    Emulator.findOne({ name: element }),
+                ]);
+                if (emulator) newDevice.emulators.push(emulator._id);
+            }
+        }
+
         // Si se cambia el nombre, introducimos el nuevo en la propiedad 'name'
         if (newName) updatedDevice.name = newName;
 
@@ -165,12 +185,13 @@ const devicesPUT = async (req, res, next) => {
         } else throw new RetroError("Device not found", 404);
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
+        logError(error.statusCode + ' - ' + error.message);
+
         if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
         });
-        logError(error.statusCode + ' - ' + error.message);
     }
 }
 
@@ -190,12 +211,13 @@ const devicesDELETE = async (req, res, next) => {
         } else throw new RetroError("Device not found", 404);
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
+        logError(error.statusCode + ' - ' + error.message);
+
         if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
         });
-        logError(error.statusCode + ' - ' + error.message);
     }
 }
 
