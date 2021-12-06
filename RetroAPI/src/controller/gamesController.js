@@ -42,6 +42,8 @@ const gamesPOST = async (req, res, next) => {
     try {
         const newGame = new Game(req.body);
 
+        logDebug("POST access from /api/v1/games");
+
         // Si el usuario ha añadido una descripción, comprobamos que sea un array
         if (req.body.description) {
             if (!Array.isArray(req.body.description)) throw new RetroError('The description must be an array', 400);
@@ -52,6 +54,8 @@ const gamesPOST = async (req, res, next) => {
         if (gameExists.length == 1) throw new RetroError('The game already exists', 400);
 
         await newGame.save();
+
+        logDebug("Operation succeed");
 
         res.status(201).json({
             "msg": "The new game has been saved successfully"
@@ -72,6 +76,8 @@ const gamesPUT = async (req, res, next) => {
     try {
         // Desestructuramos para almacenar la descripción
         let { description, ...updatedGame } = req.body;
+
+        logDebug("PUT access from /api/v1/games");
 
         // Buscamos el documento en la BD
         let [gameBeforeUpdate] = await Game.find({ 'name': updatedGame.name });
@@ -120,6 +126,7 @@ const gamesPUT = async (req, res, next) => {
         const result = await Game.updateOne({ 'name': updatedGame.name }, updatedGame, { new: true });
 
         if (result) {
+            logDebug("Operation succeed");
             res.status(200).json({
                 "msg": "Game successfully updated"
             });
@@ -139,8 +146,12 @@ const gamesPUT = async (req, res, next) => {
 const gamesDELETE = async (req, res, next) => {
     try {
         const { name } = req.body;
+
+        logDebug("DELETE access from /api/v1/games");
+
         const result = await Game.findOneAndDelete({ name });
         if (result) {
+            logDebug("Operation succeed");
             res.status(200).json({
                 "msg": "Game successfully deleted"
             });

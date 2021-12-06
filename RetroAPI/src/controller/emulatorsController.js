@@ -42,6 +42,8 @@ const emulatorsPOST = async (req, res, next) => {
     try {
         const newEmulator = new Emulator(req.body);
 
+        logDebug("POST access from /api/v1/emulators");
+
         // Si el usuario ha añadido una descripción, comprobamos que sea un array
         if (req.body.description) {
             if (!Array.isArray(req.body.description)) throw new RetroError('The description must be an array', 400);
@@ -52,6 +54,8 @@ const emulatorsPOST = async (req, res, next) => {
         if (emulatorExists.length == 1) throw new RetroError('The emulator already exists', 400);
 
         await newEmulator.save();
+
+        logDebug("Operation succeed");
 
         res.status(201).json({
             "msg": "The new emulator has been saved successfully"
@@ -72,6 +76,8 @@ const emulatorsPUT = async (req, res, next) => {
     try {
         // Desestructuramos para almacenar la descripción
         let { description, ...updatedEmulator } = req.body;
+
+        logDebug("PUT access from /api/v1/emulators");
 
         // Buscamos el documento en la BD
         let [emulatorBeforeUpdate] = await Emulator.find({ 'name': updatedEmulator.name });
@@ -120,6 +126,7 @@ const emulatorsPUT = async (req, res, next) => {
         const result = await Emulator.updateOne({ 'name': updatedEmulator.name }, updatedEmulator, { new: true });
 
         if (result) {
+            logDebug("Operation succeed");
             res.status(200).json({
                 "msg": "Emulator successfully updated"
             });
@@ -139,8 +146,12 @@ const emulatorsPUT = async (req, res, next) => {
 const emulatorsDELETE = async (req, res, next) => {
     try {
         const { name } = req.body;
+
+        logDebug("DELETE access from /api/v1/emulators");
+
         const result = await Emulator.findOneAndDelete({ name });
         if (result) {
+            logDebug("Operation succeed");
             res.status(200).json({
                 "msg": "Emulator successfully deleted"
             });
