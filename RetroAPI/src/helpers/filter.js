@@ -87,7 +87,56 @@ const filterEmulators = (query) => {
     return { langFilter, gameFilter };
 }
 
+/**
+ * Construye el filtro para la búsqueda en la colección de 'devices', teniendo en cuenta el idioma de la descripción
+ * @param {Array} query El array con las opciones indicadas por el usuario
+ * @returns El idioma especificado por el usuario (inglés si no se ha especificado ninguno); el filtro para la búsqueda
+ */
+ const filterDevices = (query) => {
+    const { name, manufacturer, description, year, architecture, cpu, memory, type, gamepad, image, like, all, lang, ...rest } = query;
+    const langFilter = lang ? lang : 'en';
+
+    let deviceFilter = new Object;
+    let isLike = false;
+
+    // Si el usuario añade 'like=1', significa que se buscarán los campos señalados que contengan la cadena indicada
+    // Si no añade 'like=1', se buscarán las coincidencias exactaas
+    // Con 'like', si busca 'Emulador' -> 'Emulador 1', 'Emulador 2', etc.
+    // Sin 'like', si busca 'Emulador' -> solo si en el campo se almacena 'Emulador'
+    if (like) isLike = like == '1' ? true : false;
+    if (name) deviceFilter.name = isLike ? { $regex: name, $options: 'i' } : name;
+    if (manufacturer) deviceFilter.manufacturer = isLike ? { $regex: manufacturer, $options: 'i' } : manufacturer;
+
+    if (description) {
+        Object.assign(deviceFilter, isLike ? { 'description.content': { $regex: description, $options: 'i' } } : { 'description.content': description });
+        Object.assign(deviceFilter, { 'description.lang': langFilter });
+    }
+
+    if (year) deviceFilter.year = isLike ? { $regex: year, $options: 'i' } : year;
+    if (architecture) deviceFilter.architecture = isLike ? { $regex: architecture, $options: 'i' } : architecture;
+    if (cpu) deviceFilter.cpu = isLike ? { $regex: cpu, $options: 'i' } : cpu;
+    if (memory) deviceFilter.memory = isLike ? { $regex: memory, $options: 'i' } : memory;
+    if (type) deviceFilter.type = isLike ? { $regex: type, $options: 'i' } : type;
+    if (gamepad) deviceFilter.gamepad = isLike ? { $regex: gamepad, $options: 'i' } : gamepad;
+
+    if (image) deviceFilter.image = isLike ? { $regex: image, $options: 'i' } : image;
+
+    // Si el usuario incluye 'all=1' (y solo 'all=1'), se mostrará toda la colección. Si añade algún parámetro más, error
+    if (all) {
+        if (all == '1' && Object.keys(deviceFilter).length == 0) return {langFilter ,deviceFilter : {} };
+        else throw new retroError("Syntax error", 400);
+    }
+
+    // Si no hay ningún parámetro, o hay parámetros no válidos, error
+    if (Object.keys(deviceFilter).length == 0 || Object.keys(rest).length > 0) throw new retroError("Syntax error", 400);
+
+    logDebug(JSON.stringify(deviceFilter));
+
+    return { langFilter, deviceFilter };
+}
+
 module.exports = {
     filterEmulators,
     filterGames,
+    filterDevices,
 }

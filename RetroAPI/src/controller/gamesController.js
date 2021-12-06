@@ -207,4 +207,5 @@ module.exports = {
     gamesPOST,
     gamesPUT,
     gamesDELETE,
+    gamesJSON,
 }
