@@ -153,21 +153,39 @@ const devicesPUT = async (req, res, next) => {
             }
         }
 
+        // Si vamos a añadir un juego al dispositivo...
         if (games) {
+            // Añadimos los existentes (o los borraría)
+            updatedDevice.games = deviceBeforeUpdate.games;
+            // Por cada juego...
             for (let element of games) {
+                // Comprobamos si existe...
                 const [game] = await Promise.all([
                     Game.findOne({ name: element }),
                 ]);
-                if (game) newDevice.games.push(game._id);
+                // y, si existe, que no esté ya añadido previamente
+                if (game && !updatedDevice.games.includes(game._id)) {
+                    // Si todo es correcto, lo añadimos
+                    updatedDevice.games.push(game._id);
+                }
             }
         }
 
+        // Si vamos a añadir un emulador al dispositivo...
         if (emulators) {
+            // Añadimos los existentes (o los borraría)
+            updatedDevice.emulators = deviceBeforeUpdate.emulators;
+            // Por cada emulador...
             for (let element of emulators) {
+                // Comprobamos si existe...
                 const [emulator] = await Promise.all([
                     Emulator.findOne({ name: element }),
                 ]);
-                if (emulator) newDevice.emulators.push(emulator._id);
+                // y, si existe, que no esté ya añadido previamente
+                if (emulator && !updatedDevice.emulators.includes(emulator._id)) {
+                    // Si todo es correcto, lo añadimos
+                    updatedDevice.emulators.push(emulator._id);
+                }
             }
         }
 
@@ -175,7 +193,7 @@ const devicesPUT = async (req, res, next) => {
         if (newName) updatedDevice.name = newName;
 
         // Realizamos la modificación en la BD
-        const result = await Device.updateOne({ '_id': id }, updatedDevice, { new: true });
+       const result = await Device.updateOne({ '_id': id }, updatedDevice, { new: true });
 
         if (result) {
             logDebug("Operation succeed");

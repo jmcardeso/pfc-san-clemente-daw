@@ -7,6 +7,7 @@ class RetroError extends Error {
 
         this.message = msg;
         this.statusCode = statusCode;
+        this.name = 'RetroError';
     }
 }
 
