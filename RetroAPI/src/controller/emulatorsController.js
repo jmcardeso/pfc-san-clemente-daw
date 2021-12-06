@@ -28,7 +28,7 @@ const emulatorsGET = async (req, res, next) => {
         logDebug(emulators.length > 0 ? "Search succeed" : "Search not found");
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
-        if (error.name == 'CastError') error.message = "Bad request";
+        if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
@@ -62,7 +62,7 @@ const emulatorsPOST = async (req, res, next) => {
         });
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
-        if (error.name == 'CastError') error.message = "Bad request";
+        if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
@@ -75,7 +75,7 @@ const emulatorsPOST = async (req, res, next) => {
 const emulatorsPUT = async (req, res, next) => {
     try {
         // Desestructuramos para almacenar la descripción
-        let { description, ...updatedEmulator } = req.body;
+        let { description, newName, ...updatedEmulator } = req.body;
 
         logDebug("PUT access from /api/v1/emulators");
 
@@ -84,6 +84,9 @@ const emulatorsPUT = async (req, res, next) => {
 
         // Si no existe, error
         if (!emulatorBeforeUpdate) throw new RetroError('Emulator not found', 400);
+
+        // Guardamos la id, por si hay que modificar el nombre
+        const id = emulatorBeforeUpdate._id;
 
         // Convertimos la descripción del formato de MongoDB a un array normal
         let descriptionBeforeUpdate = JSON.parse(JSON.stringify(emulatorBeforeUpdate.description));
@@ -122,8 +125,12 @@ const emulatorsPUT = async (req, res, next) => {
                 } else Object.assign(updatedEmulator, { 'description': [description[0]] });
             }
         }
+
+         // Si se cambia el nombre, introducimos el nuevo en la propiedad 'name'
+         if (newName) updatedEmulator.name = newName;
+
         // Realizamos la modificación en la BD
-        const result = await Emulator.updateOne({ 'name': updatedEmulator.name }, updatedEmulator, { new: true });
+        const result = await Emulator.updateOne({ '_id': id }, updatedEmulator, { new: true });
 
         if (result) {
             logDebug("Operation succeed");
@@ -133,7 +140,7 @@ const emulatorsPUT = async (req, res, next) => {
         } else throw new RetroError("Emulator not found", 404);
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
-        if (error.name == 'CastError') error.message = "Bad request";
+        if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
@@ -158,7 +165,7 @@ const emulatorsDELETE = async (req, res, next) => {
         } else throw new RetroError("Emulator not found", 404);
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
-        if (error.name == 'CastError') error.message = "Bad request";
+        if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message

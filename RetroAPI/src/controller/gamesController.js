@@ -28,7 +28,7 @@ const gamesGET = async (req, res, next) => {
         logDebug(games.length > 0 ? "Search succeed" : "Search not found");
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
-        if (error.name == 'CastError') error.message = "Bad request";
+        if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
@@ -62,7 +62,7 @@ const gamesPOST = async (req, res, next) => {
         });
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
-        if (error.name == 'CastError') error.message = "Bad request";
+        if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
@@ -75,7 +75,7 @@ const gamesPOST = async (req, res, next) => {
 const gamesPUT = async (req, res, next) => {
     try {
         // Desestructuramos para almacenar la descripción
-        let { description, ...updatedGame } = req.body;
+        let { description, newName, ...updatedGame } = req.body;
 
         logDebug("PUT access from /api/v1/games");
 
@@ -84,6 +84,9 @@ const gamesPUT = async (req, res, next) => {
 
         // Si no existe, error
         if (!gameBeforeUpdate) throw new RetroError('Game not found', 400);
+
+        // Guardamos la id, por si hay que modificar el nombre
+        const id = gameBeforeUpdate._id;
 
         // Convertimos la descripción del formato de MongoDB a un array normal
         let descriptionBeforeUpdate = JSON.parse(JSON.stringify(gameBeforeUpdate.description));
@@ -122,8 +125,12 @@ const gamesPUT = async (req, res, next) => {
                 } else Object.assign(updatedGame, { 'description': [description[0]] });
             }
         }
+
+         // Si se cambia el nombre, introducimos el nuevo en la propiedad 'name'
+         if (newName) updatedGame.name = newName;
+
         // Realizamos la modificación en la BD
-        const result = await Game.updateOne({ 'name': updatedGame.name }, updatedGame, { new: true });
+        const result = await Game.updateOne({ '_id': id }, updatedGame, { new: true });
 
         if (result) {
             logDebug("Operation succeed");
@@ -133,7 +140,7 @@ const gamesPUT = async (req, res, next) => {
         } else throw new RetroError("Game not found", 404);
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
-        if (error.name == 'CastError') error.message = "Bad request";
+        if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
@@ -158,7 +165,7 @@ const gamesDELETE = async (req, res, next) => {
         } else throw new RetroError("Game not found", 404);
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
-        if (error.name == 'CastError') error.message = "Bad request";
+        if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message

@@ -34,7 +34,7 @@ const devicesGET = async (req, res, next) => {
         logDebug(devices.length > 0 ? "Search succeed" : "Search not found");
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
-        if (error.name == 'CastError') error.message = "Bad request";
+        if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
@@ -51,18 +51,22 @@ const devicesPOST = async (req, res, next) => {
 
         logDebug("POST access from /api/v1/devices");
 
-        for (let element of games) {
-            const [game] = await Promise.all([
-                Game.findOne({ name: element }),
-            ]);
-            if (game) newDevice.games.push(game._id);
+        if (games) {
+            for (let element of games) {
+                const [game] = await Promise.all([
+                    Game.findOne({ name: element }),
+                ]);
+                if (game) newDevice.games.push(game._id);
+            }
         }
 
-        for (let element of emulators) {
-            const [emulator] = await Promise.all([
-                Emulator.findOne({ name: element }),
-            ]);
-            if (emulator) newDevice.emulators.push(emulator._id);
+        if (emulators) {
+            for (let element of emulators) {
+                const [emulator] = await Promise.all([
+                    Emulator.findOne({ name: element }),
+                ]);
+                if (emulator) newDevice.emulators.push(emulator._id);
+            }
         }
 
         // Si el usuario ha añadido una descripción, comprobamos que sea un array
@@ -83,7 +87,7 @@ const devicesPOST = async (req, res, next) => {
         });
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
-        if (error.name == 'CastError') error.message = "Bad request";
+        if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
@@ -96,7 +100,7 @@ const devicesPOST = async (req, res, next) => {
 const devicesPUT = async (req, res, next) => {
     try {
         // Desestructuramos para almacenar la descripción
-        let { description, ...updatedDevice } = req.body;
+        let { description, games, emulators, newName, ...updatedDevice } = req.body;
 
         logDebug("PUT access from /api/v1/devices");
 
@@ -105,6 +109,9 @@ const devicesPUT = async (req, res, next) => {
 
         // Si no existe, error
         if (!deviceBeforeUpdate) throw new RetroError('Device not found', 400);
+
+        // Guardamos la id, por si hay que modificar el nombre
+        const id = deviceBeforeUpdate._id;
 
         // Convertimos la descripción del formato de MongoDB a un array normal
         let descriptionBeforeUpdate = JSON.parse(JSON.stringify(deviceBeforeUpdate.description));
@@ -143,8 +150,12 @@ const devicesPUT = async (req, res, next) => {
                 } else Object.assign(updatedDevice, { 'description': [description[0]] });
             }
         }
+
+        // Si se cambia el nombre, introducimos el nuevo en la propiedad 'name'
+        if (newName) updatedDevice.name = newName;
+
         // Realizamos la modificación en la BD
-        const result = await Device.updateOne({ 'name': updatedDevice.name }, updatedDevice, { new: true });
+        const result = await Device.updateOne({ '_id': id }, updatedDevice, { new: true });
 
         if (result) {
             logDebug("Operation succeed");
@@ -154,7 +165,7 @@ const devicesPUT = async (req, res, next) => {
         } else throw new RetroError("Device not found", 404);
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
-        if (error.name == 'CastError') error.message = "Bad request";
+        if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
@@ -179,7 +190,7 @@ const devicesDELETE = async (req, res, next) => {
         } else throw new RetroError("Device not found", 404);
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
-        if (error.name == 'CastError') error.message = "Bad request";
+        if (error.name != 'RetroError') error.message = "Bad request";
 
         res.status(error.statusCode).json({
             "msg": error.message
