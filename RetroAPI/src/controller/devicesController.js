@@ -193,7 +193,7 @@ const devicesPUT = async (req, res, next) => {
         if (newName) updatedDevice.name = newName;
 
         // Realizamos la modificación en la BD
-       const result = await Device.updateOne({ '_id': id }, updatedDevice, { new: true });
+        const result = await Device.updateOne({ '_id': id }, updatedDevice, { new: true });
 
         if (result) {
             logDebug("Operation succeed");
@@ -216,17 +216,72 @@ const devicesPUT = async (req, res, next) => {
 // Borrar un documento de la colección 'devices' de la BD
 const devicesDELETE = async (req, res, next) => {
     try {
-        const { name } = req.body;
+        const { name, games, emulators } = req.body;
 
         logDebug("DELETE access from /api/v1/devices");
 
-        const result = await Device.findOneAndDelete({ name });
-        if (result) {
-            logDebug("Operation succeed");
-            res.status(200).json({
-                "msg": "Device successfully deleted"
-            });
-        } else throw new RetroError("Device not found", 404);
+        // Si añadimos al cuerpo del mensaje 'games' o 'emulators', no eliminamos el dispositivo sino los juegos o emuladores indicados
+        if (games || emulators) {
+            // Buscamos el documento en la BD
+            let [deviceBeforeUpdate] = await Device.find({ 'name': name });
+
+            // Si no existe, error
+            if (!deviceBeforeUpdate) throw new RetroError('Device not found', 400);
+
+            // Si vamos a eliminar uno o más juegos del dispositivo...
+            if (games) {
+                // Por cada juego...
+                for (let gm of games) {
+                    // ...comprobamos si existe
+                    const [game] = await Promise.all([
+                        Game.findOne({ name: gm }),
+                    ]);
+                    // En caso de que exista, comprobamos que esté en el array de juegos del dispositivo
+                    if (game) {
+                        let index = deviceBeforeUpdate.games.indexOf(game._id);
+                        // Si está, lo eliminamos del array
+                        if (index != -1) deviceBeforeUpdate.games.splice(index, 1);
+                    }
+                }
+            }
+
+            // Si vamos a eliminar uno o más emuladores del dispositivo...
+            if (emulators) {
+                // Por cada emulador...
+                for (let em of emulators) {
+                    // ...comprobamos si existe
+                    const [emulator] = await Promise.all([
+                        Emulator.findOne({ name: em }),
+                    ]);
+                    // En caso de que exista, comprobamos que esté en el array de emuladores del dispositivo
+                    if (emulator) {
+                        let index = deviceBeforeUpdate.emulators.indexOf(emulator._id);
+                        // Si está, lo eliminamos del array
+                        if (index != -1) deviceBeforeUpdate.emulators.splice(index, 1);
+                    }
+                }
+            }
+
+            // Realizamos la modificación en la BD
+            const result = await Device.updateOne({ '_id': deviceBeforeUpdate._id }, deviceBeforeUpdate, { new: true });
+
+            if (result) {
+                logDebug("Operation succeed");
+                res.status(200).json({
+                    "msg": "Device successfully updated"
+                });
+            } else throw new RetroError("Device not found", 404);
+
+        } else {
+            // En este caso, sí que eliminamos el dispositivo (no están 'games' o 'emulators' en el cuerpo del mensaje)
+            const result = await Device.findOneAndDelete({ name });
+            if (result) {
+                logDebug("Operation succeed");
+                res.status(200).json({
+                    "msg": "Device successfully deleted"
+                });
+            } else throw new RetroError("Device not found", 404);
+        }
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
         logError(error.statusCode + ' - ' + error.message);
