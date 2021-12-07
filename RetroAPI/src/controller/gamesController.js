@@ -1,6 +1,7 @@
 // Controlador para los juegos
 
 const Game = require('./../model/Game');
+const Device = require('./../model/Device');
 const { logDebug, logInfo, logError } = require('./../helpers/logger');
 const { filterGames } = require('./../helpers/filter');
 const RetroError = require('./../services/routes/errors/retroError');
@@ -128,8 +129,8 @@ const gamesPUT = async (req, res, next) => {
             }
         }
 
-         // Si se cambia el nombre, introducimos el nuevo en la propiedad 'name'
-         if (newName) updatedGame.name = newName;
+        // Si se cambia el nombre, introducimos el nuevo en la propiedad 'name'
+        if (newName) updatedGame.name = newName;
 
         // Realizamos la modificación en la BD
         const result = await Game.updateOne({ '_id': id }, updatedGame, { new: true });
@@ -159,13 +160,24 @@ const gamesDELETE = async (req, res, next) => {
 
         logDebug("DELETE access from /api/v1/games");
 
-        const result = await Game.findOneAndDelete({ name });
+        const game = await Game.findOne({ name });
+
+        // Comprobamos que no exista ninguna referencia al juego en la colección 'devices'
+        if (game) {
+            for await (const device of Device.find()) {
+                for (const gm of device.games) {
+                    if (gm.toString() == game.id) throw new RetroError("This game cannot be deleted, it is referenced in the Devices collection", 400);
+                }
+            }
+        } else throw new RetroError("Game not found", 404);
+
+        const result = await Game.deleteOne({ name });
         if (result) {
             logDebug("Operation succeed");
             res.status(200).json({
                 "msg": "Game successfully deleted"
             });
-        } else throw new RetroError("Game not found", 404);
+        } else throw new RetroError("Error deleting game", 404);
     } catch (error) {
         if (error.statusCode == undefined) error.statusCode = 400;
         logError(error.statusCode + ' - ' + error.message);

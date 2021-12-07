@@ -1,6 +1,7 @@
 // Controlador para los emuladores
 
 const Emulator = require('./../model/Emulator');
+const Device = require('./../model/Device');
 const { logDebug, logInfo, logError } = require('./../helpers/logger');
 const { filterEmulators } = require('./../helpers/filter');
 const RetroError = require('./../services/routes/errors/retroError');
@@ -159,7 +160,18 @@ const emulatorsDELETE = async (req, res, next) => {
 
         logDebug("DELETE access from /api/v1/emulators");
 
-        const result = await Emulator.findOneAndDelete({ name });
+        const emulator = await Emulator.findOne({ name });
+
+        // Comprobamos que no exista ninguna referencia al emulador en la colección 'devices'
+        if (emulator) {
+            for await (const device of Device.find()) {
+                for (const dv of device.emulators) {
+                    if (dv.toString() == emulator.id) throw new RetroError("This emulator cannot be deleted, it is referenced in the Devices collection", 400);
+                }
+            }
+        } else throw new RetroError("Game not found", 404);
+
+        const result = await Emulator.deleteOne({ name });
         if (result) {
             logDebug("Operation succeed");
             res.status(200).json({
