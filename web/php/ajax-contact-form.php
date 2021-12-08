@@ -6,14 +6,14 @@ class Ajax_Contact_Form {
      *
      * @var string
      */
-    protected $address_destination = 'email@example.com';
+    protected $address_destination = 'jmcardeso@outlook.es';
 
     /**
      * Message subject
      *
      * @var string
      */
-    protected $message_subject = 'Message from AJAX Contact Form';
+    protected $message_subject = 'RetroAPI web';
 
     /**
      * Strings to translate or change it.
@@ -23,17 +23,17 @@ class Ajax_Contact_Form {
     protected $strings = array(
         'body'              => '
             <h1>{{subject}}</h1>
-            <p><strong>From:</strong> {{name}}</p>
+            <p><strong>De:</strong> {{name}}</p>
             <p><strong>E-Mail:</strong> {{email}}</p>
-            <p><strong>Message:</strong> <br> {{message}}</p>',
-        'success'           => 'Thank You! I will be in touch.',
-        'error'             => 'Sorry there was an error sending your message. Please check server PHP mail configuration.',
+            <p><strong>Mensaje:</strong> <br> {{message}}</p>',
+        'success'           => 'Mensaje enviado con éxito.',
+        'error'             => 'Ha habido un error enviando el mensaje. Por favor, revise la configuración del servidor de correo PHP.',
         'demo'              => 'This is demo message from PHP',
-        'header_injection'  => 'Header injection detected.',
-        'enter_name'        => 'Please enter your name.',
-        'enter_email'       => 'Please enter a valid email address.',
-        'enter_message'     => 'Please enter your message.',
-        'ajax_only'         => 'Allowed only XMLHttpRequest.',
+        'header_injection'  => 'Detectada header injection.',
+        'enter_name'        => 'Escriba su nombre',
+        'enter_email'       => 'Introduzca una dirección de correo válida.',
+        'enter_message'     => 'Escriba su mensaje.',
+        'ajax_only'         => 'Permitido solo XMLHttpRequest.',
     );
 
     /**
@@ -41,7 +41,7 @@ class Ajax_Contact_Form {
      *
      * @var bool
      */
-    protected $demo = true;
+    protected $demo = false;
 
     /**
      * nK_Contact_Form constructor.
