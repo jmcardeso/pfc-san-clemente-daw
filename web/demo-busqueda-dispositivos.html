@@ -23,7 +23,7 @@
         type="text/css">
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
 
     <!-- FontAwesome -->
     <script defer src="assets/vendor/fontawesome-free/js/all.js"></script>
@@ -54,8 +54,7 @@
     <!-- END: Styles -->
 
     <!-- jQuery -->
-    <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
 
 </head>
 
@@ -312,27 +311,25 @@
 
         <div class="container">
 
+
+
+
+
+
             <!-- START: Forms -->
             <div class="nk-gap-2"></div>
             <div class="row vertical-gap">
                 <div class="col-lg-12">
                     <h3><span class="text-main-1">Búsqueda</span> de dispositivos</h3>
                     <div class="nk-gap"></div>
-                    <form class="nk-form" onsubmit="event.preventDefault();">
+                    <form class="nk-form nk-form-style-1" onsubmit="event.preventDefault();">
                         <div class="row vertical-gap sm-gap">
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="name" placeholder="Nombre" id="txtNombre">
-                            </div>
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="cosa" placeholder="Name *">
+                                <input type="text" class="form-control" name="name" placeholder="Nombre del dispositivo" autocomplete="off" id="txtNombre">
                             </div>
                         </div>
                         <div class="nk-gap"></div>
-                        <textarea class="form-control" name="message" rows="5" placeholder="Message *"></textarea>
-                        <div class="nk-gap-1"></div>
-                        <button class="nk-btn nk-btn-rounded nk-btn-color-dark-3" id="buscar-dispositivo">
-                            <span>Buscar</span>
-                        </button>
+
                         <div class="nk-form-response-success"></div>
                         <div class="nk-form-response-error"></div>
                     </form>
@@ -416,10 +413,10 @@
     <script src="assets/vendor/gsap/src/minified/plugins/ScrollToPlugin.min.js"></script>
 
     <!-- Popper -->
-    <script src="assets/vendor/popper.js/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" crossorigin="anonymous"></script>
 
     <!-- Bootstrap -->
-    <script src="assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
     <!-- Sticky Kit -->
     <script src="assets/vendor/sticky-kit/dist/sticky-kit.min.js"></script>
@@ -467,6 +464,9 @@
     <!-- GoodGames -->
     <script src="assets/js/goodgames.min.js"></script>
     <script src="assets/js/goodgames-init.js"></script>
+
+    <script src="assets/js/bootstrap-4-autocomplete.min.js"></script>
+
     <script src="assets/js/retroapi.js"></script>
     <!-- END: Scripts -->
 
