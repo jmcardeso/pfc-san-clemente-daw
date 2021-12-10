@@ -50,7 +50,11 @@ const muestraError = (error) => {
 
 const muestraEmulador = (nombreDispositivo) => {
     try {
-        let salida = '<div class="nk-gap-2"></div><div class="row vertical-gap text-white"><div class="col-lg-12"><div class="nk-box-2 bg-dark-2"><h4>Resultado</h4>';
+        let salida = `<div class="nk-gap-2"></div>
+                        <div class="row vertical-gap text-white">
+                            <div class="col-lg-8">
+                                <div class="nk-box-2 bg-dark-2">`
+
         let dispositivo = dispositivos.find(element => element.name == nombreDispositivo);
         if (dispositivo == undefined) {
             salida = `<div class="nk-info-box text-info">
@@ -63,7 +67,16 @@ const muestraEmulador = (nombreDispositivo) => {
                     <h3>No encontrado</h3>
                     <em>No se ha encontrado ningúnn dispositivo con ese nombre.</em>
                 </div>`;
-        } else salida += JSON.stringify(dispositivo) + '</div></div>';
+        } else {
+            salida += `<h3 class="text-main-1">${dispositivo.name}</h3>`;
+            if (dispositivo.description.length > 0) salida += `<p class="text-white">${dispositivo.description[0].content}</p>`;
+            salida += `<p class="text-secondary">CPU: <span class="text-white">${typeof dispositivo.cpu != 'undefined' ? dispositivo.cpu : ""}</span></p>
+
+            
+            
+            
+            </div></div>`;
+        }
 
         $('#mostrar').html(salida);
     } catch (error) {
