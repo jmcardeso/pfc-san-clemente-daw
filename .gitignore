@@ -4,3 +4,4 @@ RetroAPI/.env
 RetroAPI/emulators_mongodb.json
 RetroAPI/games_mongodb.json
 RetroAPI/devices_mongodb.json
+RetroAPI/RetroAPI.postman_collection.json
