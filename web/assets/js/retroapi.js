@@ -61,7 +61,7 @@ const muestraEmulador = (nombreDispositivo) => {
                         <i class="ion-close-round"></i>
                     </div>
                     <h3>No encontrado</h3>
-                    <em>No se ha encontrado ningúnn dispositivo con ese nombre.</em>
+                    <em>No se ha encontrado ningún dispositivo con ese nombre.</em>
                 </div>`;
             $('#mostrar').parent().removeClass('col-lg-8').addClass('col-lg-12');
             $('#sb-juegos').attr('hidden', true);
