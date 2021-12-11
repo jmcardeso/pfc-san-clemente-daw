@@ -1,12 +1,5 @@
 let dispositivos;
 
-const crearPeticionDispositivo = () => {
-    if ($('#txtNombre').val() != "") {
-        let url = 'disp?name=' + $('#txtNombre').val();
-        retroAjax(url);
-    } else alert("No hay nombre");
-}
-
 const retroAjaxListaDispositivos = () => {
     $.ajax({
         url: 'https://retroapi-daw.herokuapp.com/api/v1/devices?all=1&lang=es',
@@ -48,6 +41,8 @@ const muestraError = (error) => {
     $('#mostrar').html(salida);
     $('#mostrar').parent().removeClass('col-lg-8').addClass('col-lg-12');
     $('#ficha').attr('hidden', false);
+    $('#sb-juegos').attr('hidden', true);
+    $('#sb-emuladores').attr('hidden', true);
 }
 
 const muestraEmulador = (nombreDispositivo) => {
@@ -70,6 +65,7 @@ const muestraEmulador = (nombreDispositivo) => {
                 </div>`;
             $('#mostrar').parent().removeClass('col-lg-8').addClass('col-lg-12');
             $('#sb-juegos').attr('hidden', true);
+            $('#sb-emuladores').attr('hidden', true);
         } else {
             salida += `<h3 class="text-main-1">${dispositivo.name}</h3>`;
 
