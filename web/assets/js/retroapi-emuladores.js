@@ -1,15 +1,15 @@
-let juegos;
+let emuladores;
 
-const retroAjaxListaJuegos = () => {
+const retroAjaxListaEmuladores = () => {
     $.ajax({
-        url: 'https://retroapi-daw.herokuapp.com/api/v1/games?all=1&lang=es',
+        url: 'https://retroapi-daw.herokuapp.com/api/v1/emulators?all=1&lang=es',
         type: 'GET',
         dataType: 'json',
         success: function (json) {
-            juegos = json.games;
+            emuladores = json.emulators;
             let lista = llenaListaSugerencias();
 
-            $('#txtJuego').autocomplete({
+            $('#txtEmulador').autocomplete({
                 label: 'label',
                 value: 'value',
                 source: lista,
@@ -43,14 +43,14 @@ const muestraError = (error) => {
     $('#ficha').attr('hidden', false);
     $('#sb-anuncio').attr('hidden', true);}
 
-const muestraJuego = (nombreJuego) => {
+const muestraEmulador = (nombreEmulador) => {
     try {
         let salida = `<div class="nk-gap-2"></div>
                         <div class="row vertical-gap text-white">
                             <div class="nk-box-2 bg-dark-2">`
 
-        let juego = juegos.find(element => element.name == nombreJuego);
-        if (juego == undefined) {
+        let emulador = emuladores.find(element => element.name == nombreEmulador);
+        if (emulador == undefined) {
             salida = `<div class="nk-info-box text-info">
                     <div class="nk-info-box-icon">
                         <i class="ion-information"></i>
@@ -59,29 +59,21 @@ const muestraJuego = (nombreJuego) => {
                         <i class="ion-close-round"></i>
                     </div>
                     <h3>No encontrado</h3>
-                    <em>No se ha encontrado ningún juego con ese nombre.</em>
+                    <em>No se ha encontrado ningún emulador con ese nombre.</em>
                 </div>`;
             $('#mostrar').parent().removeClass('col-lg-8').addClass('col-lg-12');
             $('#sb-anuncio').attr('hidden', true);
         } else {
-            salida += `<h3 class="text-main-1">${juego.name}</h3>`;
+            salida += `<h3 class="text-main-1">${emulador.name}</h3>`;
 
-            if (juego.image.length > 0) {
-                salida += '<div class="nk-post-img">';
-                salida += `<img src="${juego.image[0]}" alt="${juego.name}">`
-                salida += `</div>
-                            <div class="nk-gap-2"></div>`;
-            }
-
-            if (juego.description.length > 0) salida += `<p class="text-white">${juego.description[0].content}</p>`;
-            salida += `<p class="text-secondary">Estudio: <span class="text-white">${typeof juego.studio != 'undefined' ? juego.studio : ""}</span></p>`;
-            salida += `<p class="text-secondary">Género: <span class="text-white">${typeof juego.genre != 'undefined' ? juego.genre : ""}</span></p>`;
-            salida += `<p class="text-secondary">Año de lanzamiento: <span class="text-white">${typeof juego.year != 'undefined' ? juego.year : ""}</span></p>`;
-            
+            if (emulador.description.length > 0) salida += `<p class="text-white">${emulador.description[0].content}</p>`;
+            salida += `<p class="text-secondary">Autor: <span class="text-white">${typeof emulador.author != 'undefined' ? emulador.author : ""}</span></p>`;
+            salida += `<p class="text-secondary">Licencia: <span class="text-white">${typeof emulador.license != 'undefined' ? emulador.license : ""}</span></p>`;
+            salida += `<p class="text-secondary">Web: <a class="text-white" href="${typeof emulador.web != 'undefined' ? emulador.web : "#"}">${typeof emulador.web != 'undefined' ? emulador.web : ""}</a></p>`;
             salida += `
                 <p class="text-secondary"><small>Fuente: Wikipedia</small></p>
             </div>`;
-
+            
             $('#mostrar').parent().removeClass('col-lg-12').addClass('col-lg-8');
             $('#sb-anuncio').attr('hidden', false);
         }
@@ -97,21 +89,21 @@ const llenaListaSugerencias = () => {
     let datos = new Array();
     let contador = 0;
 
-    for (let gm of juegos) {
-        datos.push(JSON.parse('{"label" : "' + gm.name + '",  "value" : ' + ++contador + '}'));
+    for (let emu of emuladores) {
+        datos.push(JSON.parse('{"label" : "' + emu.name + '",  "value" : ' + ++contador + '}'));
     }
 
     return datos;
 }
 
 const onSelectItem = (seleccion) => {
-    muestraJuego(seleccion.label);
+    muestraEmulador(seleccion.label);
 }
 
 // =================== MAIN ===================
 
 $('#btnBuscar').click(() => {
-    muestraJuego($('#txtJuego').val());
+    muestraEmulador($('#txtEmulador').val());
 });
 
-retroAjaxListaJuegos();
+retroAjaxListaEmuladores();
