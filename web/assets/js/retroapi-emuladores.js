@@ -17,6 +17,13 @@ const retroAjaxListaEmuladores = () => {
                 treshold: 2,
                 highlightClass: 'text-danger'
             });
+
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+
+            if (urlParams.has('name')) {
+                muestraEmulador(urlParams.get('name'));
+            }
         },
         error: function (jqXHR, status, error) {
             let salida = "";

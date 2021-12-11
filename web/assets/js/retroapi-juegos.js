@@ -17,6 +17,13 @@ const retroAjaxListaJuegos = () => {
                 treshold: 2,
                 highlightClass: 'text-danger'
             });
+
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+
+            if (urlParams.has('name')) {
+                muestraJuego(urlParams.get('name'));
+            }
         },
         error: function (jqXHR, status, error) {
             let salida = "";
@@ -41,7 +48,8 @@ const muestraError = (error) => {
     $('#mostrar').html(salida);
     $('#mostrar').parent().removeClass('col-lg-8').addClass('col-lg-12');
     $('#ficha').attr('hidden', false);
-    $('#sb-anuncio').attr('hidden', true);}
+    $('#sb-anuncio').attr('hidden', true);
+}
 
 const muestraJuego = (nombreJuego) => {
     try {
@@ -77,7 +85,7 @@ const muestraJuego = (nombreJuego) => {
             salida += `<p class="text-secondary">Estudio: <span class="text-white">${typeof juego.studio != 'undefined' ? juego.studio : ""}</span></p>`;
             salida += `<p class="text-secondary">Género: <span class="text-white">${typeof juego.genre != 'undefined' ? juego.genre : ""}</span></p>`;
             salida += `<p class="text-secondary">Año de lanzamiento: <span class="text-white">${typeof juego.year != 'undefined' ? juego.year : ""}</span></p>`;
-            
+
             salida += `
                 <p class="text-secondary"><small>Fuente: Wikipedia</small></p>
             </div>`;

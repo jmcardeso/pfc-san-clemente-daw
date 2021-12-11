@@ -105,7 +105,7 @@ const muestraEmulador = (nombreDispositivo) => {
                                <img src="${juego.image[0]}" alt="${juego.name}">
                             </div>`;
                     }
-                    salidaJuegos += `<h3 class="nk-post-title">${juego.name}</h3>`;
+                    salidaJuegos += `<h3 class="nk-post-title"><a href="./demo-busqueda-juegos.html?name=${juego.name}">${juego.name}</a></h3>`;
                     if (juego.year > 0) {
                         salidaJuegos += `<p>${juego.year}</p>`;
                     }
@@ -128,7 +128,7 @@ const muestraEmulador = (nombreDispositivo) => {
                 for (let emulador of dispositivo.emulators) { 
                     if (contador > 3) break;
 
-                    salidaEmuladores += `<h4 class="nk-post-title">${emulador.name}</h4>`;
+                    salidaEmuladores += `<h4 class="nk-post-title"><a href="./demo-busqueda-emuladores.html?name=${emulador.name}">${emulador.name}</a></h4>`;
                     if (emulador.web != undefined) {
                         salidaEmuladores += `<p><a href="${emulador.web}">${emulador.web}</a></p>`;
                     }
