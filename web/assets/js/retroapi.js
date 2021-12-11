@@ -69,7 +69,7 @@ const muestraEmulador = (nombreDispositivo) => {
                     <em>No se ha encontrado ningúnn dispositivo con ese nombre.</em>
                 </div>`;
             $('#mostrar').parent().removeClass('col-lg-8').addClass('col-lg-12');
-            $('#sidebar').attr('hidden', true);
+            $('#sb-juegos').attr('hidden', true);
         } else {
             salida += `<h3 class="text-main-1">${dispositivo.name}</h3>`;
 
@@ -86,7 +86,7 @@ const muestraEmulador = (nombreDispositivo) => {
             salida += `<p class="text-secondary">Año de lanzamiento: <span class="text-white">${typeof dispositivo.year != 'undefined' ? dispositivo.year : ""}</span></p>`;
             salida += `<p class="text-secondary">CPU: <span class="text-white">${typeof dispositivo.cpu != 'undefined' ? dispositivo.cpu : ""}</span></p>`;
             salida += `<p class="text-secondary">Memoria: <span class="text-white">${typeof dispositivo.memory != 'undefined' ? dispositivo.memory : ""}</span></p>`;
-            
+
             if (dispositivo.gamepad != undefined) {
                 salida += '<div class="col-sm-6 nk-post-img" style="padding-left: 0;">';
                 salida += '<p class="text-secondary">Mando:</p>';
@@ -95,12 +95,56 @@ const muestraEmulador = (nombreDispositivo) => {
                             <div class="nk-gap-2"></div>`;
             }
 
+            if (dispositivo.games.length > 0) {
+                let salidaJuegos = "";
+
+                let contador = 0;
+                for (let juego of dispositivo.games) {
+                    if (contador > 3) break;
+
+                    salidaJuegos += `<div class="nk-widget-post">`;
+
+                    if (juego.image.length > 0) {
+                        salidaJuegos += `<div class="nk-post-image">
+                               <img src="${juego.image[0]}" alt="${juego.name}">
+                            </div>`;
+                    }
+                    salidaJuegos += `<h3 class="nk-post-title">${juego.name}</h3>`;
+                    if (juego.year > 0) {
+                        salidaJuegos += `<p>${juego.year}</p>`;
+                    }
+                    if (juego.genre.length > 0) {
+                        salidaJuegos += `<div class="nk-post-categories">
+                                            <span class="bg-main-1">${juego.genre}</span>
+                                         </div>`
+                    }
+                    salidaJuegos += `                    </div>`;
+                    contador++;
+                }
+                $('#juegos').html(salidaJuegos);
+                $('#sb-juegos').attr('hidden', false);
+            }
+
+            if (dispositivo.emulators.length > 0) {
+                let salidaEmuladores = "";
+
+                let contador = 0;
+                for (let emulador of dispositivo.emulators) { 
+                    if (contador > 3) break;
+
+                    salidaEmuladores += `<h4 class="nk-post-title">${emulador.name}</h4>`;
+                    if (emulador.web != undefined) {
+                        salidaEmuladores += `<p><a href="${emulador.web}">${emulador.web}</a></p>`;
+                    }
+                    contador++;
+                }
+                $('#emuladores').html(salidaEmuladores);
+                $('#sb-emuladores').attr('hidden', false);
+            }
+
             salida += `
-            
-            
-            <p class="text-secondary"><small>Fuente: Wikipedia</small></p>
+                <p class="text-secondary"><small>Fuente: Wikipedia</small></p>
             </div>`;
-            $('#sidebar').attr('hidden', false);
             $('#mostrar').parent().removeClass('col-lg-12').addClass('col-lg-8');
         }
 
