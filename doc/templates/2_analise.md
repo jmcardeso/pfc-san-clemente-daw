@@ -20,25 +20,25 @@ Haberá dous tipos de actores que interaccionen co sistema: o usuario anónimo e
   
   - Crear equipo (nome, fabricante, ano, arquitectura, procesador, memoria, tipo, mando, fotos, descripción, xogos, emuladores)
   
-  - Modificar equipo (id, nomefabricante, ano, arquitectura, procesador, memoria, tipo, mando, fotos, descrición, xogos, emuladores)
+  - Modificar equipo (nome, fabricante, ano, arquitectura, procesador, memoria, tipo, mando, fotos, descrición, xogos, emuladores)
   
-  - Eliminar equipo (id)
+  - Eliminar equipo (nome)
 
 - Xestión de xogos
   
   - Crear xogo (nome, productora, ano, xénero, descrición, fotos)
   
-  - Modificar xogo (id, nome, productora, ano, xénero, descrición, fotos)
+  - Modificar xogo (nome, productora, ano, xénero, descrición, fotos)
   
-  - Eliminar xogo (id)
+  - Eliminar xogo (nome)
 
 - Xestión de emuladores
   
   - Crear emulador (nome, licenza, web, descrición, autor)
   
-  - Modificar emulador (id, nome, licenza, web, descrición, autor)
+  - Modificar emulador (nome, licenza, web, descrición, autor)
   
-  - Eliminar emulador (id)
+  - Eliminar emulador (nome)
 
 ## 3. Requerimentos non funcionais
 
@@ -53,7 +53,9 @@ A modificación da base de datos terá que ser realizada por un actor debidament
 
 ### 5.1. Dominio
 
-Indica os dominios que se van a empregar.
+API: http://retroapi-daw.herokuapp.com/
+
+Web: https://retroapi-web.herokuapp.com/
 
 ### 5.2. Hardware
 
@@ -61,9 +63,11 @@ Un ordenador para desenvolver a aplicación e un servizo de *hosting* baseado na
 
 ### 5.3. Software
 
-Para o desenvolvemento do proxecto empregarase como IDE Visual Studio Code, ademais dos distintos linguaxes e frameworks necesarios (todos eles *Open Source*)
+Para o desenvolvemento do proxecto empregarase como IDE Visual Studio Code, ademais dos distintos linguaxes e frameworks necesarios (todos eles *Open Source*).
 
-No servizo de *hosting* instalarase un sistema operativo GNU/Linux, cun servidor web e un sistema xestor de base de datos (igualmente *Open Source*).
+Como servizo de *hosting* da API e a web empregarase Heroku, pola súa facilidade de configuración e despregamento.
+
+A base de datos estará aloxada en Atlas, pertencente a MongoDB, que ten un servizo gratuíto con limitacións, pero suficiente para os propósitos deste proxecto.
 
 ## 6. Interfaces externos
 
