@@ -53,7 +53,7 @@ A modificación da base de datos terá que ser realizada por un actor debidament
 
 ### 5.1. Dominio
 
-API: http://retroapi-daw.herokuapp.com/
+API: https://retroapi-daw.herokuapp.com/
 
 Web: https://retroapi-web.herokuapp.com/
 
