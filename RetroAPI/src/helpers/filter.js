@@ -14,7 +14,7 @@ const filterEmulators = (query) => {
     let isLike = false;
 
     // Si el usuario añade 'like=1', significa que se buscarán los campos señalados que contengan la cadena indicada
-    // Si no añade 'like=1', se buscarán las coincidencias exactaas
+    // Si no añade 'like=1', se buscarán las coincidencias exactas
     // Con 'like', si busca 'Emulador' -> 'Emulador 1', 'Emulador 2', etc.
     // Sin 'like', si busca 'Emulador' -> solo si en el campo se almacena 'Emulador'
     if (like) isLike = like == '1' ? true : false;

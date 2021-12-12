@@ -80,6 +80,7 @@ const muestraEmulador = (nombreDispositivo) => {
             salida += `<p class="text-secondary">Fabricante: <span class="text-white">${typeof dispositivo.manufacturer != 'undefined' ? dispositivo.manufacturer : ""}</span></p>`;
             salida += `<p class="text-secondary">Tipo: <span class="text-white">${typeof dispositivo.type != 'undefined' ? dispositivo.type : ""}</span></p>`;
             salida += `<p class="text-secondary">Año de lanzamiento: <span class="text-white">${typeof dispositivo.year != 'undefined' ? dispositivo.year : ""}</span></p>`;
+            salida += `<p class="text-secondary">Arquitectura: <span class="text-white">${typeof dispositivo.architecture != 'undefined' ? dispositivo.architecture : ""}</span></p>`;
             salida += `<p class="text-secondary">CPU: <span class="text-white">${typeof dispositivo.cpu != 'undefined' ? dispositivo.cpu : ""}</span></p>`;
             salida += `<p class="text-secondary">Memoria: <span class="text-white">${typeof dispositivo.memory != 'undefined' ? dispositivo.memory : ""}</span></p>`;
 
