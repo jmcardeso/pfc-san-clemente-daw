@@ -14,11 +14,35 @@ Este proxecto, RetroAPI, ten como obxectivo recompilar a información sobre hard
 
 ## Instalación
 
-> *Tarefa*: Neste apartado describe con toda precisión e, a poder ser, coa maior simplicidade/facilidade posible, como poñer en marcha a túa aplicación para probala (nun entorno local). Valorarase moi positivamente que este proceso sexa o máis fácil posible, cunha simple instrución (por exemplo, un script de instalación).
+Para instalar a API en local só fan falta dous pasos:
+
+1. Clonar o repo nun directorio do noso ordenador:
+   
+   ```bash
+   ssh://git@gitlab.iessanclemente.net:60600/dawm/a18juancg.git
+   ```
+
+2. Entrar no directorio e teclear o comando:
+   
+   ```bash
+   node src/index.js
+   ```
+
+A URL para entrar no servidor é:
+
+```bash
+localhost:8080
+```
 
 ## Uso
 
-> *Tarefa*: Neste apartado, describe brevemente como se usará o software. Se ten unha interfaz de terminal, describe aquí a súa sintaxe. Se ten unha interfaz gráfica de usuario, describe aquí **só o uso** (a modo de sumario) **dos aspectos máis relevantes do seu funcionamento** (máxima brevidade, como se fose un anuncio reclamo ou comercial).
+A API ten tres *endpoints*: ```localhost:8080/api/v1/devices``` para os dispositivos, ```localhost:8080/api/v1/games``` para os xogos e ```localhost:8080/api/v1/emulators``` para os emuladores.
+
+RetroAPI admite os métodos ```GET```, ```POST```, ```PUT``` e ```DELETE``` para ler, engadir, modificar e borrar a información da base de datos.
+
+Pódese empregar un programa como Postman para realizar as peticións e recibir as respostas. O método ```GET``` permite empregar parámetros na URL, os outros tres só aceptan un JSON no corpo (*body*) da petición.
+
+Para máis información, consultar a documentación da API na [web](https://retroapi-web.herokuapp.com/documentacion.html).
 
 ## Sobre o autor
 
@@ -47,8 +71,7 @@ Desexas contribuír? Calquera contribución é benvida. Sigue, por favor, [estas
 
 ## Memoria
 
-> *Tarefa*: Indexa de forma ordenada a memoria do teu proxecto.
-> Durante a redacción da memoria, debes ir completando progresivamente o anexo de Referencias.
+> 
 
 1. [Estudo preliminar](doc/templates/1_estudo_preliminar.md)
 2. [Análise: Requerimentos do sistema](doc/templates/2_analise.md)
