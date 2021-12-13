@@ -6,7 +6,7 @@ const EmulatorSchema = mongoose.model('Emulator').schema;
 const Schema = mongoose.Schema;
 
 const DeviceSchema = Schema({
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true, unique: true, sparse: true },
     manufacturer: { type: String, required: false },
     architecture: { type: String, required: false },
     cpu: { type: String, required: false },

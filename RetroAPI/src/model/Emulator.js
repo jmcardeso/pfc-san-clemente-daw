@@ -1,7 +1,7 @@
 const { model, Schema } = require('mongoose');
 
 const EmulatorSchema = Schema({
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true, unique: true, sparse: true },
     license: { type: String, required: false },
     web: { type: String, required: false },
     description: [{

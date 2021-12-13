@@ -1,7 +1,7 @@
 const { model, Schema } = require('mongoose');
 
 const GameSchema = Schema({
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true, unique: true, sparse: true },
     studio: { type: String, required: false },
     year: { type: Number, required: false },
     description: [{
