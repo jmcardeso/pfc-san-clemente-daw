@@ -84,7 +84,7 @@ const muestraEmulador = (nombreDispositivo) => {
             salida += `<p class="text-secondary">CPU: <span class="text-white">${typeof dispositivo.cpu != 'undefined' ? dispositivo.cpu : ""}</span></p>`;
             salida += `<p class="text-secondary">Memoria: <span class="text-white">${typeof dispositivo.memory != 'undefined' ? dispositivo.memory : ""}</span></p>`;
 
-            if (dispositivo.gamepad != undefined) {
+            if (dispositivo.gamepad != undefined && dispositivo.gamepad.length > 0) {
                 salida += '<div class="col-sm-6 nk-post-img" style="padding-left: 0;">';
                 salida += '<p class="text-secondary">Mando:</p>';
                 salida += `<img src="${dispositivo.gamepad}" alt="${dispositivo.name}">`
