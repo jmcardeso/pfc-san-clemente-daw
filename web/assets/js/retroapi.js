@@ -120,7 +120,7 @@ const muestraEmulador = (nombreDispositivo) => {
                 }
                 $('#juegos').html(salidaJuegos);
                 $('#sb-juegos').attr('hidden', false);
-            }
+            } else $('#sb-juegos').attr('hidden', true);
 
             if (dispositivo.emulators.length > 0) {
                 let salidaEmuladores = "";
@@ -137,7 +137,7 @@ const muestraEmulador = (nombreDispositivo) => {
                 }
                 $('#emuladores').html(salidaEmuladores);
                 $('#sb-emuladores').attr('hidden', false);
-            }
+            } else $('#sb-emuladores').attr('hidden', true);
 
             salida += `
                 <p class="text-secondary"><small>Fuente: Wikipedia</small></p>
